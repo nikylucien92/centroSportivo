@@ -1,4 +1,4 @@
-package progetto.centroSportivo.centroSportivo;
+package it;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
