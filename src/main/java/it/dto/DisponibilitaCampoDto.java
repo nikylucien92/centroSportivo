@@ -1,13 +1,19 @@
 package it.dto;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Data
 public class DisponibilitaCampoDto {
+    private Integer id;
+    private String statoDisponibilita;
+    private LocalDateTime data;
+    private LocalDateTime oraInizio;
+    private LocalDateTime oraFine;
+    private PrenotazioneDto prenotazioneCampoDto;
+    private CampoDto campoDto;
 }
