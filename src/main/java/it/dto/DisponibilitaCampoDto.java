@@ -9,5 +9,5 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class DisponibilitaCampo {
+public class DisponibilitaCampoDto {
 }
