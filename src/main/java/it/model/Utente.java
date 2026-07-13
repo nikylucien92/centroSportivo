@@ -20,13 +20,13 @@ import java.util.List;
 public class Utente {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer id_utente;
+    private Integer id;
     private String nome;
     private String cognome;
     private String email;
     private String password;
     private String telefono;
-    private LocalDateTime data_registrazione;
+    private LocalDateTime dataRegistrazione;
 
     @OneToMany
     private List<Prenotazione> listaPrenotazioni=new ArrayList<>();
