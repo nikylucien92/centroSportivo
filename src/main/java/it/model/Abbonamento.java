@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 @Table(schema = "schema_dev")
 public class Abbonamento {
 
+
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
