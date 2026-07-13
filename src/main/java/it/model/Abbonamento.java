@@ -23,6 +23,7 @@ public class Abbonamento {
     private Integer id;
 //    private Utente utenteId;
 //    private Corso corsoId;
+    @Enumerated(EnumType.STRING)
     private AbbonamentoTypeEnum tipo;
     private LocalDateTime dataInizio;
     private LocalDateTime dataFine;
