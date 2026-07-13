@@ -21,9 +21,9 @@ public class Disponibilita_campo {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private Integer campo_id;
-    private String stato;
+    private String stato_disponibilita;
     private LocalDateTime data;
     private LocalDateTime ora_inizio;
     private LocalDateTime ora_fine;
-    private String stato_disponibilita;
+   
 }

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class Utente {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id_utente;
     private String nome;
     private String cognome;
     private String email;

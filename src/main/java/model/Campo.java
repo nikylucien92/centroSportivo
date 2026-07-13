@@ -18,10 +18,10 @@ import lombok.Setter;
 public class Campo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id_campo;
     private String nome;
     private String tipologia_campo;
     private Double prezzo_campo;
     private Boolean coperto;
-    private String stato;
+    private String stato_campo;
 }
