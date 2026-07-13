@@ -26,7 +26,7 @@ public class Campo {
     private Boolean coperto;
 
     @OneToMany(mappedBy = "campo")
-    private List<DisponibilitaCampo> listaDisponibilità=new ArrayList<>();
+    private List<DisponibilitaCampo> listaDisponibilita=new ArrayList<>();
 
 
     @OneToMany(mappedBy = "campo")
