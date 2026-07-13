@@ -26,6 +26,12 @@ public class Pagamento {
     private PagamentoTypeEnum metodo;
     private String stato;
     private LocalDateTime dataPagamento;
-//    private Utente utenteId;
-//    private PrenotazioneId;
+
+    @ManyToOne
+    @JoinColumn(name = "utente_id")
+    private Utente utente;
+
+    @ManyToOne
+    @JoinColumn(name = "prenotazione_id")
+    private Prenotazione prenotazione;
 }
