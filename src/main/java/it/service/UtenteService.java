@@ -21,4 +21,10 @@ public class UtenteService extends AbstractService<Utente, UtenteDto> {
         this.prenotazioneMapper = prenotazioneMapper;
         this.utenteRepository = utenteRepository;
     }
+
+    public UtenteDto findByEmail(String email) throws Exception {
+        Utente utente=utenteRepository.findByEmail(email)
+                .orElseThrow(()->new Exception("User not found"));
+        return utenteMapper.toDTO(utente);
+    }
 }
