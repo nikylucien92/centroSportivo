@@ -1,6 +1,5 @@
 package it.dto;
 
-import it.enumerated.GiorniEnum;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -10,15 +9,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Data
-public class CorsoDto {
+public class DisponibilitaCampoDto {
 
     private Integer id;
-    private String nome;
-    private String sport;
-    private String livello;
-    private GiorniEnum giorni;
+    private String statoDisponibilita;
+    private LocalDateTime data;
     private LocalDateTime oraInizio;
     private LocalDateTime oraFine;
-    private Double prezzo;
+    private PrenotazioneDto prenotazioneCampoDto;
     private CampoDto campoDto;
 }
