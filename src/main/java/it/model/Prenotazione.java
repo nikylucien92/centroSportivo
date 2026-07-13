@@ -1,9 +1,6 @@
 package it.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +22,12 @@ public class Prenotazione {
     private Double costo_totale;
     private Double quota_persona;
     private String stato_prenotazione;
-    private Integer utente_creator_id;
-    private Integer disponibilita_id;
 
+    @JoinColumn(name="disponibilita_id")
+    @OneToOne
+    private DisponibilitaCampo disponibilitaCampo;
+
+    @JoinColumn(name="utente_id_creato")
+    @ManyToOne
+    private Utente utenteCreato;
 }

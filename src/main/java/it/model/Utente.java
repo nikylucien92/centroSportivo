@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,4 +27,7 @@ public class Utente {
     private String password;
     private String telefono;
     private LocalDateTime data_registrazione;
+
+    @OneToMany
+    private List<Prenotazione> listaPrenotazioni=new ArrayList<>();
 }

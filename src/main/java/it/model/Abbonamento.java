@@ -14,10 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(schema = "schema_dev")
+@Table(schema = "sportivo")
 public class Abbonamento {
-
-
 
 
     @Id

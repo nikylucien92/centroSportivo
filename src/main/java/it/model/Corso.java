@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(schema = "schema_dev")
+@Table(schema = "sportivo")
 public class Corso {
 
     @Id
@@ -28,5 +28,9 @@ public class Corso {
     private LocalDateTime oraInizio;
     private LocalDateTime oraFine;
     private Double prezzo;
-//    private Campo campoId;
+
+    @ManyToOne
+    @JoinColumn(name="campo_id")
+    private Campo campo;
+
 }

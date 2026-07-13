@@ -1,9 +1,6 @@
 package it.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +13,8 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Disponibilita_campo {
+@Table(schema = "sportivo")
+public class DisponibilitaCampo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
@@ -25,5 +23,12 @@ public class Disponibilita_campo {
     private LocalDateTime data;
     private LocalDateTime ora_inizio;
     private LocalDateTime ora_fine;
+
+    @OneToOne(mappedBy = "disponibilitaCampo")
+    private Prenotazione prenotazioneCampo;
+
+    @ManyToOne
+    @JoinColumn(name="campo_id")
+    private Campo campo;
 
 }

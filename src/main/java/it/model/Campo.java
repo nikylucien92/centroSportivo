@@ -1,13 +1,13 @@
 package it.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,6 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
+@Table(schema = "sportivo")
 public class Campo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -23,5 +24,11 @@ public class Campo {
     private String tipologia_campo;
     private Double prezzo_campo;
     private Boolean coperto;
-    private String stato_campo;
+
+    @OneToMany(mappedBy = "campo")
+    private List<DisponibilitaCampo> listaDisponibilità=new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "campo")
+    private List<Corso> listaCorsi=new ArrayList<>();
 }
