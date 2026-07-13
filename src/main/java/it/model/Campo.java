@@ -1,4 +1,4 @@
-package model;
+package it.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,21 +9,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Disponibilita_campo {
+
+public class Campo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer id;
-    private Integer campo_id;
-    private String stato_disponibilita;
-    private LocalDateTime data;
-    private LocalDateTime ora_inizio;
-    private LocalDateTime ora_fine;
-
+    private Integer id_campo;
+    private String nome;
+    private String tipologia_campo;
+    private Double prezzo_campo;
+    private Boolean coperto;
+    private String stato_campo;
 }

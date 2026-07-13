@@ -1,4 +1,4 @@
-package model;
+package it.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,16 +16,14 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Prenotazione {
+public class Disponibilita_campo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private LocalDateTime data_prenotazione;
-    private Integer numero_giocatori;
-    private Double costo_totale;
-    private Double quota_persona;
-    private String stato_prenotazione;
-    private Integer utente_creator_id;
-    private Integer disponibilita_id;
+    private Integer campo_id;
+    private String stato_disponibilita;
+    private LocalDateTime data;
+    private LocalDateTime ora_inizio;
+    private LocalDateTime ora_fine;
 
 }
