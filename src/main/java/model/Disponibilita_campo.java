@@ -25,5 +25,5 @@ public class Disponibilita_campo {
     private LocalDateTime data;
     private LocalDateTime ora_inizio;
     private LocalDateTime ora_fine;
-   
+
 }
