@@ -19,10 +19,10 @@ import java.util.List;
 public class Campo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer id_campo;
+    private Integer id;
     private String nome;
-    private String tipologia_campo;
-    private Double prezzo_campo;
+    private String tipologiaCampo;
+    private Double prezzoCampo;
     private Boolean coperto;
 
     @OneToMany(mappedBy = "campo")

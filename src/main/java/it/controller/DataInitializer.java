@@ -78,8 +78,8 @@ public class DataInitializer implements CommandLineRunner {
     private Campo creaCampo(String nome, String tipo, Double prezzo) {
         Campo c = new Campo();
         c.setNome(nome);
-        c.setTipologia_campo(tipo);
-        c.setPrezzo_campo(prezzo);
+        c.setTipologiaCampo(tipo);
+        c.setPrezzoCampo(prezzo);
         c.setCoperto(true);
         return c;
     }
