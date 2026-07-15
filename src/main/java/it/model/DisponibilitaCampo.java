@@ -18,10 +18,11 @@ public class DisponibilitaCampo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private String stato_disponibilita;
+    private String statoDisponibilita;
     private LocalDateTime data;
-    private LocalDateTime ora_inizio;
-    private LocalDateTime ora_fine;
+    private LocalDateTime oraInizio;
+    private LocalDateTime oraFine;
+    private Boolean disponibilita;
 
     @OneToOne(mappedBy = "disponibilitaCampo")
     private Prenotazione prenotazioneCampo;

@@ -29,6 +29,7 @@ public class UtenteService extends AbstractService<Utente, UtenteDto> {
         this.prenotazioneRepository = prenotazioneRepository;
     }
 
+
     public UtenteDto findByEmail(String email) throws Exception {
         Utente utente=utenteRepository.findByEmail(email)
                 .orElseThrow(()->new Exception("User not found"));
@@ -47,17 +48,23 @@ public class UtenteService extends AbstractService<Utente, UtenteDto> {
         return utenteDto;
         }
 
-
-    public void cambiaPassword(String email, String password) throws Exception {
+/*
+    public void salvaPassword(String email, String password) throws Exception {
         Utente utente = utenteRepository.findByEmail(email)
                 .orElseThrow(() -> new Exception("Utente non trovato"));
         utente.setPassword(password);
         utenteRepository.save(utente);
 
     }
+*/
+    public Utente salvaPassword(Utente utente) {
+
+        // Salva la password così come è stata inserita
+        return utenteRepository.save(utente);
+    }
+
+
+    }
 
 
 
-
-
-}
