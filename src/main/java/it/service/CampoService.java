@@ -54,5 +54,7 @@ public class CampoService extends AbstractService<Campo, CampoDto> {
 
     }
 
+    //cancella prenotazione
+
 
 }

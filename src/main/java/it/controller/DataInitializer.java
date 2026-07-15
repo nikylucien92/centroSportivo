@@ -101,7 +101,6 @@ public class DataInitializer implements CommandLineRunner {
         p.setDisponibilitaCampo(d);
         p.setNumeroGiocatori(4);
         p.setCostoTotale(40.0);
-        p.setQuotaPersona(10.0);
         p.setStatoPrenotazione("CONFERMATA");
         p.setDataPrenotazione(LocalDateTime.now());
         return p;

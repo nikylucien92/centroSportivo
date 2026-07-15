@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class PrenotazioneService extends AbstractService<Prenotazione, PrenotazioneDto>{
@@ -179,5 +180,17 @@ public class PrenotazioneService extends AbstractService<Prenotazione, Prenotazi
 //        return prenotazioneMapper.toDTO(saved);
 //    }
 
+        public List<PrenotazioneDto> cancellaPrenotazione(Integer idUtente ,Integer idPrenotazione) throws Exception{
 
+        Utente utente=utenteRepository.findById(idUtente).orElseThrow(() -> new Exception("Utente non trovato"));
+        List<Prenotazione>lista= utente.getListaPrenotazioni();
+         boolean prenotazioneRimossa=utente.getListaPrenotazioni()
+                    .removeIf(p -> p.getId().equals(idPrenotazione));
+            if (!prenotazioneRimossa) {
+                throw new Exception("Prenotazione non trovata");
+            }
+            utenteRepository.save(utente);
+            return prenotazioneMapper.toDTOList(utente.getListaPrenotazioni());
+
+        }
 }

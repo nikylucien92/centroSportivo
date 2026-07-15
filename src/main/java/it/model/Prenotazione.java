@@ -21,7 +21,6 @@ public class Prenotazione {
     private LocalDateTime dataPrenotazione;
     private Integer numeroGiocatori;
     private Double costoTotale;
-    private Double quotaPersona;
     private String statoPrenotazione;
 
     @JoinColumn(name="disponibilita_id")
