@@ -1,6 +1,7 @@
 package it.dto;
 
 import it.enumerated.PagamentoTypeEnum;
+import it.enumerated.PagamentoStatoEnum;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,6 @@ public class PagamentoDto {
     private Integer id;
     private Double prezzo;
     private PagamentoTypeEnum metodo;
-    private String stato;
+    private PagamentoStatoEnum stato;
     private LocalDateTime dataPagamento;
 }

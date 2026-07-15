@@ -2,6 +2,7 @@ package it.model;
 
 
 import it.enumerated.PagamentoTypeEnum;
+import it.enumerated.PagamentoStatoEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +25,8 @@ public class Pagamento {
     private Double prezzo;
     @Enumerated(EnumType.STRING)
     private PagamentoTypeEnum metodo;
-    private String stato;
+    @Enumerated(EnumType.STRING)
+    private PagamentoStatoEnum stato;
     private LocalDateTime dataPagamento;
 
     @ManyToOne

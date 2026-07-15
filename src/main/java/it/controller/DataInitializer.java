@@ -2,6 +2,7 @@ package it.controller;
 
 import it.enumerated.AbbonamentoTypeEnum;
 import it.enumerated.GiorniEnum;
+import it.enumerated.PagamentoStatoEnum;
 import it.enumerated.PagamentoTypeEnum;
 import it.model.*;
 import it.repository.*;
@@ -49,7 +50,7 @@ public class DataInitializer implements CommandLineRunner {
             prenotazioneRepository.save(p);
 
             // create pagamento (model currently lacks FK fields to link to user/prenotazione)
-            Pagamento pay = creaPagamento(u, p, 10.0 * i, PagamentoTypeEnum.CARTA, "PAGATO");
+            Pagamento pay = creaPagamento(u, p, 10.0 * i, PagamentoTypeEnum.CARTA);
             pagamentoRepository.save(pay);
 
             // create corso linked to campo
@@ -87,10 +88,10 @@ public class DataInitializer implements CommandLineRunner {
     private DisponibilitaCampo creaDisponibilita(Campo campo, LocalDateTime start) {
         DisponibilitaCampo d = new DisponibilitaCampo();
         d.setCampo(campo);
-        d.setStato_disponibilita("DISPONIBILE");
+        d.setStatoDisponibilita("DISPONIBILE");
         d.setData(start);
-        d.setOra_inizio(start);
-        d.setOra_fine(start.plusHours(1));
+        d.setOraInizio(start);
+        d.setOraFine(start.plusHours(1));
         return d;
     }
 
@@ -106,13 +107,13 @@ public class DataInitializer implements CommandLineRunner {
         return p;
     }
 
-    private Pagamento creaPagamento(Utente u, Prenotazione prenotazione, Double prezzo, PagamentoTypeEnum metodo, String stato) {
+    private Pagamento creaPagamento(Utente u, Prenotazione prenotazione, Double prezzo, PagamentoTypeEnum metodo) {
         Pagamento p = new Pagamento();
         p.setUtente(u);
         p.setPrenotazione(prenotazione);
         p.setPrezzo(prezzo);
         p.setMetodo(metodo);
-        p.setStato(stato);
+        p.setStato(PagamentoStatoEnum.COMPLETATO);
         p.setDataPagamento(LocalDateTime.now());
         return p;
     }
