@@ -42,10 +42,20 @@ public class UtenteService extends AbstractService<Utente, UtenteDto> {
 
 
         public UtenteDto findByName(String nome) throws Exception{
-        Utente utente=utenteRepository.findByName(nome).orElseThrow(()-> new ExpressionException("Name not found"));
+        Utente utente=utenteRepository.findByNome(nome).orElseThrow(()-> new ExpressionException("Name not found"));
         UtenteDto utenteDto=utenteMapper.toDTO(utente);
         return utenteDto;
         }
+
+
+    public void cambiaPassword(String email, String password) throws Exception {
+        Utente utente = utenteRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("Utente non trovato"));
+        utente.setPassword(password);
+        utenteRepository.save(utente);
+
+    }
+
 
 
 
