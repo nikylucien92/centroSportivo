@@ -30,4 +30,9 @@ public class Prenotazione {
     @JoinColumn(name="utente_id_creato")
     @ManyToOne
     private Utente utenteCreato;
+
+    @OneToOne(mappedBy = "prenotazione",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Pagamento pagamento;
 }

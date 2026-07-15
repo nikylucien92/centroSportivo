@@ -6,9 +6,11 @@ import it.dto.UtenteDto;
 import it.mapper.Converter;
 import it.mapper.PagamentoMapper;
 import it.mapper.PrenotazioneMapper;
+import it.model.DisponibilitaCampo;
 import it.model.Pagamento;
 import it.model.Prenotazione;
 import it.model.Utente;
+import it.repository.DisponibilitaCampoRepository;
 import it.repository.PagamentoRepository;
 import it.repository.PrenotazioneRepository;
 import it.repository.UtenteRepository;
@@ -25,12 +27,14 @@ public class PrenotazioneService extends AbstractService<Prenotazione, Prenotazi
     private final PrenotazioneRepository prenotazioneRepository;
     private final UtenteRepository utenteRepository;
     private final EmailService emailService;
-    protected PrenotazioneService(JpaRepository<Prenotazione, Integer> repository, Converter<Prenotazione, PrenotazioneDto> converter, PrenotazioneMapper prenotazioneMapper, PrenotazioneRepository prenotazioneRepository, UtenteRepository utenteRepository, EmailService emailService) {
+    private final DisponibilitaCampoRepository disponibilitaCampoRepository;
+    protected PrenotazioneService(JpaRepository<Prenotazione, Integer> repository, Converter<Prenotazione, PrenotazioneDto> converter, PrenotazioneMapper prenotazioneMapper, PrenotazioneRepository prenotazioneRepository, UtenteRepository utenteRepository, EmailService emailService, DisponibilitaCampoRepository disponibilitaCampoRepository) {
         super(repository, converter);
         this.prenotazioneMapper = prenotazioneMapper;
         this.prenotazioneRepository = prenotazioneRepository;
         this.utenteRepository = utenteRepository;
         this.emailService = emailService;
+        this.disponibilitaCampoRepository = disponibilitaCampoRepository;
     }
 
     public PrenotazioneDto effetuaPrenotazione(PrenotazioneDto prenotazioneDto,
@@ -180,17 +184,58 @@ public class PrenotazioneService extends AbstractService<Prenotazione, Prenotazi
 //        return prenotazioneMapper.toDTO(saved);
 //    }
 
-        public List<PrenotazioneDto> cancellaPrenotazione(Integer idUtente ,Integer idPrenotazione) throws Exception{
+        /* public List<PrenotazioneDto> cancellaPrenotazione(Integer idUtente ,Integer idPrenotazione) throws Exception{
 
         Utente utente=utenteRepository.findById(idUtente).orElseThrow(() -> new Exception("Utente non trovato"));
-        List<Prenotazione>lista= utente.getListaPrenotazioni();
-         boolean prenotazioneRimossa=utente.getListaPrenotazioni()
-                    .removeIf(p -> p.getId().equals(idPrenotazione));
+        List<Prenotazione>lista= prenotazioneRepository.findByUtenteCreatoId(utente.getId());
+         boolean prenotazioneRimossa=lista.
+                    removeIf(p -> p.getId().equals(idPrenotazione));
             if (!prenotazioneRimossa) {
                 throw new Exception("Prenotazione non trovata");
             }
-            utenteRepository.save(utente);
-            return prenotazioneMapper.toDTOList(utente.getListaPrenotazioni());
+            List<Prenotazione> listaSalvata=prenotazioneRepository.saveAll(lista);
+            utente.setListaPrenotazioni(listaSalvata);
+            Utente utenteSalvato=utenteRepository.save(utente);
+            return prenotazioneMapper.toDTOList(utenteSalvato.getListaPrenotazioni());
 
+        } */
+        public List<PrenotazioneDto> cancellaPrenotazione(Integer idUtente,
+                                                          Integer idPrenotazione) throws Exception {
+
+            // Recupero l'utente
+            Utente utente = utenteRepository.findById(idUtente)
+                    .orElseThrow(() -> new Exception("Utente non trovato"));
+
+            // Recupero la prenotazione
+            Prenotazione prenotazione = prenotazioneRepository.findById(idPrenotazione)
+                    .orElseThrow(() -> new Exception("Prenotazione non trovata"));
+
+            // Verifico che appartenga all'utente
+            if (!prenotazione.getUtenteCreato().getId().equals(idUtente)) {
+                throw new Exception("La prenotazione non appartiene a questo utente");
+            }
+
+            // Recupero la disponibilità associata
+            DisponibilitaCampo disponibilita = prenotazione.getDisponibilitaCampo();
+
+            if (disponibilita != null) {
+                // Libero lo slot
+                disponibilita.setDisponibilita(true);
+
+                // Rompo la relazione bidirezionale
+                disponibilita.setPrenotazioneCampo(null);
+                prenotazione.setDisponibilitaCampo(null);
+
+                disponibilitaCampoRepository.save(disponibilita);
+            }
+
+            // Elimino la prenotazione
+            prenotazioneRepository.delete(prenotazione);
+
+            // Restituisco la lista aggiornata delle prenotazioni dell'utente
+            List<Prenotazione> listaAggiornata =
+                    prenotazioneRepository.findByUtenteCreatoId(idUtente);
+
+            return prenotazioneMapper.toDTOList(listaAggiornata);
         }
 }

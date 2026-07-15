@@ -28,6 +28,6 @@ public class Utente {
     private String telefono;
     private LocalDateTime dataRegistrazione;
 
-    @OneToMany
+    @OneToMany (mappedBy = "utenteCreato", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Prenotazione> listaPrenotazioni=new ArrayList<>();
 }

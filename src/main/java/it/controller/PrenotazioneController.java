@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/prenotazione")
 @CrossOrigin(origins = "http://localhost:4200")
-public class PrenotazioneController {
+public class PrenotazioneController extends AbstractController <PrenotazioneDto>{
     private final PrenotazioneService prenotazioneService;
     @PostMapping
     public ResponseEntity<PrenotazioneDto> createPrenotazione(@RequestBody PrenotazioneDto prenotazioneDto,
@@ -22,7 +22,7 @@ public class PrenotazioneController {
     }
 
             @DeleteMapping("/{idUtente}")
-            public ResponseEntity <List<PrenotazioneDto>> cancellaPrenotazione(@RequestParam @PathVariable Integer idUtente ,@RequestParam Integer idPrenotazione)throws Exception{
+            public ResponseEntity <List<PrenotazioneDto>> cancellaPrenotazione(@PathVariable Integer idUtente ,@RequestParam Integer idPrenotazione)throws Exception{
            List<PrenotazioneDto> prenotazioneCancellata= prenotazioneService.cancellaPrenotazione(idUtente,idPrenotazione);
                     return ResponseEntity.ok(prenotazioneCancellata);
 
