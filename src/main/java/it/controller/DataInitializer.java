@@ -71,7 +71,7 @@ public class DataInitializer implements CommandLineRunner {
         u.setEmail(email);
         u.setPassword("password");
         u.setTelefono("3331234567");
-        u.setData_registrazione(LocalDateTime.now());
+        u.setDataRegistrazione(LocalDateTime.now());
         return u;
     }
 
@@ -98,11 +98,11 @@ public class DataInitializer implements CommandLineRunner {
         Prenotazione p = new Prenotazione();
         p.setUtenteCreato(u);
         p.setDisponibilitaCampo(d);
-        p.setNumero_giocatori(4);
-        p.setCosto_totale(40.0);
-        p.setQuota_persona(10.0);
-        p.setStato_prenotazione("CONFERMATA");
-        p.setData_prenotazione(LocalDateTime.now());
+        p.setNumeroGiocatori(4);
+        p.setCostoTotale(40.0);
+        p.setQuotaPersona(10.0);
+        p.setStatoPrenotazione("CONFERMATA");
+        p.setDataPrenotazione(LocalDateTime.now());
         return p;
     }
 

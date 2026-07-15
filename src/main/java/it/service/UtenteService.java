@@ -10,6 +10,7 @@ import it.model.Utente;
 import it.repository.PrenotazioneRepository;
 import it.repository.UtenteRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,4 +39,15 @@ public class UtenteService extends AbstractService<Utente, UtenteDto> {
         utentedto.setListaPrenotazioniDto(prenotazionedto);
         return utentedto;
     }
+
+
+        public UtenteDto findByName(String nome) throws Exception{
+        Utente utente=utenteRepository.findByName(nome).orElseThrow(()-> new ExpressionException("Name not found"));
+        UtenteDto utenteDto=utenteMapper.toDTO(utente);
+        return utenteDto;
+        }
+
+
+
+
 }

@@ -2,6 +2,7 @@ package it.service;
 
 import it.dto.PagamentoDto;
 import it.dto.PrenotazioneDto;
+import it.dto.UtenteDto;
 import it.mapper.Converter;
 import it.mapper.PagamentoMapper;
 import it.mapper.PrenotazioneMapper;
@@ -21,4 +22,6 @@ public class PrenotazioneService extends AbstractService<Prenotazione, Prenotazi
         this.prenotazioneMapper = prenotazioneMapper;
         this.prenotazioneRepository = prenotazioneRepository;
     }
+
+
 }

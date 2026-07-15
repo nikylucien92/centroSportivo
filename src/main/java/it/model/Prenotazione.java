@@ -18,11 +18,11 @@ public class Prenotazione {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private LocalDateTime data_prenotazione;
-    private Integer numero_giocatori;
-    private Double costo_totale;
-    private Double quota_persona;
-    private String stato_prenotazione;
+    private LocalDateTime dataPrenotazione;
+    private Integer numeroGiocatori;
+    private Double costoTotale;
+    private Double quotaPersona;
+    private String statoPrenotazione;
 
     @JoinColumn(name="disponibilita_id")
     @OneToOne

@@ -2,6 +2,7 @@ package it.service;
 
 import it.dto.AbbonamentoDto;
 import it.dto.CampoDto;
+import it.dto.UtenteDto;
 import it.mapper.AbbonamentoMapper;
 import it.mapper.CampoMapper;
 import it.mapper.Converter;
@@ -22,4 +23,5 @@ public class CampoService extends AbstractService<Campo, CampoDto> {
         this.campomapper = campomapper;
         this.campoRepository = campoRepository;
     }
+
 }
