@@ -28,6 +28,12 @@ public class PrenotazioneController extends AbstractController <PrenotazioneDto>
 
             }
 
+            // Todo: aggiungere endpoint per recuperare le prenotazioni di un utente
+            // Todo: aggiungere endpoint per cambiare lo stato della prenotazione (es. da "in attesa" a "confermata" oppure "annullata")
+            // Todo: cambiare nome all'entity Corso
+            // Todo: aggiungere metodo per trovare le prenotazione in base alla data
+            // Todo:
+
 
 
 }
