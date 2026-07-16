@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -25,8 +26,8 @@ public class Corso {
     private String livello;
     @Enumerated(EnumType.STRING)
     private GiorniEnum giorni;
-    private LocalDateTime oraInizio;
-    private LocalDateTime oraFine;
+    private LocalTime oraInizio;
+    private LocalTime oraFine;
     private Double prezzo;
 
     @ManyToOne
