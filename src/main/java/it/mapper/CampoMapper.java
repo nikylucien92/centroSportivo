@@ -1,11 +1,8 @@
 package it.mapper;
 
-import it.dto.AbbonamentoDto;
+
 import it.dto.CampoDto;
-import it.dto.UtenteDto;
-import it.model.Abbonamento;
 import it.model.Campo;
-import it.model.Utente;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

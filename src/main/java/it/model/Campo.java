@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -21,8 +22,8 @@ public class Campo {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private String tipologiaCampo;
-    private Double prezzoCampo;
+    private String tipologia;
+    private Double prezzo;
     private Boolean coperto;
 
     @OneToMany(mappedBy = "campo")
