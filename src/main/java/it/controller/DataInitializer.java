@@ -123,8 +123,8 @@ public class DataInitializer implements CommandLineRunner {
         c.setSport(sport);
         c.setLivello("Base");
         c.setGiorni(GiorniEnum.LUNEDI);
-        c.setOraInizio(LocalDateTime.now().withHour(18).withMinute(0));
-        c.setOraFine(LocalDateTime.now().withHour(19).withMinute(30));
+        c.setOraInizio(LocalTime.now().withHour(18).withMinute(0));
+        c.setOraFine(LocalTime.now().withHour(19).withMinute(30));
         c.setPrezzo(80.0);
         c.setCampo(campo);
         return c;
