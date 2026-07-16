@@ -59,7 +59,6 @@ public class UtenteService extends AbstractService<Utente, UtenteDto> {
     }
 
 
-    //Todo: crea un metodo per cambiare telefono
     public UtenteDto cambioCell(Integer idUtente, String nuovoTelefono) throws Exception {
 
         Utente utente = utenteRepository.findById(idUtente)

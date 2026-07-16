@@ -18,6 +18,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -242,4 +243,21 @@ public class PrenotazioneService extends AbstractService<Prenotazione, Prenotazi
         public Double calcolaSpesaTotale(Integer utenteId){
             return prenotazioneRepository.getTotaleSpesoDaUtente(utenteId);
         }
+
+
+
+    public List<PrenotazioneDto> trovaPrenotazioniPerData(LocalDate data) {
+        // Se l'utente chiede il giorno 2026-07-16:
+
+        // Inizio: 2026-07-16T00:00:00
+        LocalDateTime inizio = data.atStartOfDay();
+
+        // Fine: 2026-07-16T23:59:59.999999999 (copre l'intero giorno fino all'ultimo millesimo)
+        LocalDateTime fine = data.atTime(23, 59, 59, 999999999);
+
+        List<Prenotazione> prenotazioni =
+                prenotazioneRepository.findByDataPrenotazioneBetween(inizio, fine);
+
+        return prenotazioneMapper.toDTOList(prenotazioni);
+    }
 }

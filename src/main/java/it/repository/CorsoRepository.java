@@ -18,7 +18,7 @@ public interface CorsoRepository extends JpaRepository<Corso,Integer> {
 
     List<Corso> findByCampoId(Integer campoId);
 
-    List<Corso> findBtOraInizioGreaterThanEqual(LocalTime ora);
+    List<Corso> findByOraInizioGreaterThanEqual(LocalTime ora);
 
     List<Corso> findByPrezzoLessThanEqual(BigDecimal prezzoMax);
 

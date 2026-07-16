@@ -3,9 +3,12 @@ package it.controller;
 import it.dto.PrenotazioneDto;
 import it.service.PrenotazioneService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -37,6 +40,18 @@ public class PrenotazioneController extends AbstractController<PrenotazioneDto> 
     @GetMapping("/{utenteId}/spesa-totale")
     public ResponseEntity<Double> spesaTotale(@PathVariable(name = "utenteId") Integer id) {
         return ResponseEntity.ok(prenotazioneService.calcolaSpesaTotale(id));
+    }
+
+
+
+    @GetMapping("/data")
+    public ResponseEntity<List<PrenotazioneDto>> trovaPerData(
+            // @DateTimeFormat indica a Spring come convertire la stringa "2026-07-16" in LocalDate
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
+
+        return ResponseEntity.ok(
+                prenotazioneService.trovaPrenotazioniPerData(data)
+        );
     }
 
 

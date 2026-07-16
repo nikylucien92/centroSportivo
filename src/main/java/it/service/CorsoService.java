@@ -36,7 +36,7 @@ public class CorsoService extends AbstractService<Corso, CorsoDto> {
     }
 
     public List<CorsoDto> trovaDaOra(LocalTime ora){
-        List<Corso> oraInizio = corsoRepository.findBtOraInizioGreaterThanEqual(ora);
+        List<Corso> oraInizio = corsoRepository.findByOraInizioGreaterThanEqual(ora);
         return corsoMapper.toDTOList(oraInizio);
     }
 

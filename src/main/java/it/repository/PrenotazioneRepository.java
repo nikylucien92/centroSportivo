@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,4 +17,6 @@ public interface PrenotazioneRepository extends JpaRepository<Prenotazione,Integ
 
     @Query("select coalesce(sum(p.costoTotale),0.0)From Prenotazione p where p.utenteCreato.id = :utenteId")
     Double getTotaleSpesoDaUtente(@Param("utenteId")Integer utenteId);
+
+    List<Prenotazione> findByDataPrenotazioneBetween(LocalDateTime inizio, LocalDateTime fine);
 }
