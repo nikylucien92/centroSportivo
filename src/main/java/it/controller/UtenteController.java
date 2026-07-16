@@ -19,4 +19,5 @@ public class UtenteController extends AbstractController<UtenteDto> {
         return ResponseEntity.ok( utenteService.findByEmail(email));
     }
 
+
 }

@@ -238,4 +238,8 @@ public class PrenotazioneService extends AbstractService<Prenotazione, Prenotazi
 
             return prenotazioneMapper.toDTOList(listaAggiornata);
         }
+
+        public Double calcolaSpesaTotale(Integer utenteId){
+            return prenotazioneRepository.getTotaleSpesoDaUtente(utenteId);
+        }
 }
