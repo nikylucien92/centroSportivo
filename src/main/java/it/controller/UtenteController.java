@@ -19,5 +19,25 @@ public class UtenteController extends AbstractController<UtenteDto> {
         return ResponseEntity.ok( utenteService.findByEmail(email));
     }
 
+    @PutMapping("{idUtente}/telefono")
+    public ResponseEntity<UtenteDto> cambiaTelefono(
+            @PathVariable Integer idUtente,
+            @RequestParam String telefono) throws Exception {
+
+        UtenteDto utenteDto = utenteService.cambioCell(idUtente, telefono);
+
+        return ResponseEntity.ok(utenteDto);
+    }
+
+
+    @PutMapping("{idUtente}/email")
+    public ResponseEntity<UtenteDto> cambiaEmail(
+            @PathVariable Integer idUtente,
+            @RequestParam String email) throws Exception {
+
+        UtenteDto utenteDto = utenteService.cambioEmail(idUtente, email);
+
+        return ResponseEntity.ok(utenteDto);
+    }
 
 }

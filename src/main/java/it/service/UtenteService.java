@@ -21,6 +21,7 @@ public class UtenteService extends AbstractService<Utente, UtenteDto> {
     private final PrenotazioneMapper prenotazioneMapper;
     private final UtenteRepository utenteRepository;
     private final PrenotazioneRepository prenotazioneRepository;
+
     protected UtenteService(JpaRepository<Utente, Integer> repository, Converter<Utente, UtenteDto> converter, UtenteMapper utenteMapper, PrenotazioneMapper prenotazioneMapper, UtenteRepository utenteRepository, PrenotazioneRepository prenotazioneRepository) {
         super(repository, converter);
         this.utenteMapper = utenteMapper;
@@ -31,42 +32,62 @@ public class UtenteService extends AbstractService<Utente, UtenteDto> {
 
 
     public UtenteDto findByEmail(String email) throws Exception {
-        Utente utente=utenteRepository.findByEmail(email)
-                .orElseThrow(()->new Exception("User not found"));
-        List<Prenotazione> prenotazione= prenotazioneRepository.findByUtenteCreatoId(utente.getId());
+        Utente utente = utenteRepository.findByEmail(email)
+                .orElseThrow(() -> new Exception("User not found"));
+        List<Prenotazione> prenotazione = prenotazioneRepository.findByUtenteCreatoId(utente.getId());
         List<PrenotazioneDto> prenotazionedto = prenotazioneMapper.toDTOList(prenotazione);
 
-        UtenteDto utentedto= utenteMapper.toDTO(utente);
+        UtenteDto utentedto = utenteMapper.toDTO(utente);
         utentedto.setListaPrenotazioniDto(prenotazionedto);
         return utentedto;
     }
 
 
-        public UtenteDto findByName(String nome) throws Exception{
-        Utente utente=utenteRepository.findByNome(nome).orElseThrow(()-> new ExpressionException("Name not found"));
-        UtenteDto utenteDto=utenteMapper.toDTO(utente);
+    public UtenteDto findByName(String nome) throws Exception {
+        Utente utente = utenteRepository.findByNome(nome).orElseThrow(() -> new ExpressionException("Name not found"));
+        UtenteDto utenteDto = utenteMapper.toDTO(utente);
         return utenteDto;
-        }
+    }
 
-/*
-    public void salvaPassword(String email, String password) throws Exception {
+
+    public void cambiaPassword(String email, String password) throws Exception {
         Utente utente = utenteRepository.findByEmail(email)
                 .orElseThrow(() -> new Exception("Utente non trovato"));
         utente.setPassword(password);
         utenteRepository.save(utente);
 
     }
-*/
-    public Utente salvaPassword(Utente utente) {
 
-        // Salva la password così come è stata inserita
-        return utenteRepository.save(utente);
+
+    //Todo: crea un metodo per cambiare telefono
+    public UtenteDto cambioCell(Integer idUtente, String nuovoTelefono) throws Exception {
+
+        Utente utente = utenteRepository.findById(idUtente)
+                .orElseThrow(() -> new Exception("Utente non trovato"));
+
+        utente.setTelefono(nuovoTelefono);
+
+        Utente utenteSalvato = utenteRepository.save(utente);
+
+        return utenteMapper.toDTO(utenteSalvato);
     }
 
-        //Todo: crea un metodo per cambiare telefono, nome, cognome
+    public UtenteDto cambioEmail(Integer idUtente, String nuovaEmail) throws Exception {
 
+        Utente utente = utenteRepository.findById(idUtente)
+                .orElseThrow(() -> new Exception("Utente non trovato"));
 
+        utente.setEmail(nuovaEmail);
+
+        Utente utenteSalvato = utenteRepository.save(utente);
+
+        return utenteMapper.toDTO(utenteSalvato);
+    }
 }
+
+
+
+
 
 
 
