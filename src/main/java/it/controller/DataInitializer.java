@@ -57,8 +57,14 @@ public class DataInitializer implements CommandLineRunner {
             Corso corso = creaCorso("Corso " + i, tipo, c);
             corsoRepository.save(corso);
 
-            // create abbonamento
-            Abbonamento ab = creaAbbonamento(AbbonamentoTypeEnum.MENSILE, LocalDateTime.now().minusDays(i), LocalDateTime.now().plusMonths(1), 50.0 + i * 10, "ATTIVO");
+            Abbonamento ab = creaAbbonamento(
+                    u,
+                    AbbonamentoTypeEnum.MENSILE,
+                    LocalDateTime.now().minusDays(i),
+                    LocalDateTime.now().plusMonths(1),
+                    50.0 + i * 10,
+                    "ATTIVO"
+            );
             abbonamentoRepository.save(ab);
         }
 
@@ -130,8 +136,9 @@ public class DataInitializer implements CommandLineRunner {
         return c;
     }
 
-    private Abbonamento creaAbbonamento(AbbonamentoTypeEnum tipo, LocalDateTime inizio, LocalDateTime fine, Double prezzo, String stato) {
+    private Abbonamento creaAbbonamento(Utente u, AbbonamentoTypeEnum tipo, LocalDateTime inizio, LocalDateTime fine, Double prezzo, String stato) {
         Abbonamento a = new Abbonamento();
+        a.setUtente(u);
         a.setTipo(tipo);
         a.setDataInizio(inizio);
         a.setDataFine(fine);
