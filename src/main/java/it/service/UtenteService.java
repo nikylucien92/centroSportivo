@@ -48,44 +48,25 @@ public class UtenteService extends AbstractService<Utente, UtenteDto> {
         return utenteDto;
         }
 
-
-    public void cambiaPassword(String email, String password) throws Exception {
+/*
+    public void salvaPassword(String email, String password) throws Exception {
         Utente utente = utenteRepository.findByEmail(email)
                 .orElseThrow(() -> new Exception("Utente non trovato"));
         utente.setPassword(password);
         utenteRepository.save(utente);
 
     }
+*/
+    public Utente salvaPassword(Utente utente) {
 
-
-        //Todo: crea un metodo per cambiare telefono
-        public UtenteDto cambioCell (Integer idUtente, String nuovoTelefono) throws Exception {
-
-            Utente utente = utenteRepository.findById(idUtente)
-                    .orElseThrow(() -> new Exception("Utente non trovato"));
-
-            utente.setTelefono(nuovoTelefono);
-
-            Utente utenteSalvato = utenteRepository.save(utente);
-
-            return utenteMapper.toDTO(utenteSalvato);
-        }
-
-    public UtenteDto cambioEmail (Integer idUtente, String nuovaEmail) throws Exception {
-
-        Utente utente = utenteRepository.findById(idUtente)
-                .orElseThrow(() -> new Exception("Utente non trovato"));
-
-        utente.setEmail(nuovaEmail);
-
-        Utente utenteSalvato = utenteRepository.save(utente);
-
-        return utenteMapper.toDTO(utenteSalvato);
-    }
+        // Salva la password così come è stata inserita
+        return utenteRepository.save(utente);
     }
 
+        //Todo: crea un metodo per cambiare telefono, nome, cognome
 
 
+}
 
 
 

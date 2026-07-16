@@ -11,5 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/corso")
 @CrossOrigin(origins = "http://localhost:4200")
 public class CorsoController extends AbstractController<CorsoDto> {
+
+
 }
 // toDo: creare metodo findby nome, livello, sport, campo , giorno, ora , prezzo
