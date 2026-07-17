@@ -48,8 +48,6 @@ public class CampoService extends AbstractService<Campo, CampoDto> {
 
     }
 
-
-
     public List<CampoDto> findByTipologia(String tipologia){
 
         return campoMapper.toDTOList(
@@ -57,7 +55,6 @@ public class CampoService extends AbstractService<Campo, CampoDto> {
         );
 
     }
-
 
 
     public List<CampoDto> findByCoperto(Boolean coperto){
