@@ -1,11 +1,13 @@
 package progetto.centroSportivo.centroSportivo.ServiceTest;
 
 import it.dto.AbbonamentoDto;
+import it.dto.CampoDto;
 import it.dto.UtenteDto;
 import it.enumerated.AbbonamentoTypeEnum;
 import it.enumerated.StatoAbbonamentoEnum;
 import it.mapper.AbbonamentoMapper;
 import it.model.Abbonamento;
+import it.model.Campo;
 import it.model.Utente;
 import it.repository.AbbonamentoRepository;
 import it.service.AbbonamentoService;
@@ -252,6 +254,59 @@ public class AbbonamentoServiceTest {
 
         verify(abbonamentoRepository)
                 .findById(id);
+    }
+
+    @Test
+    void getAll_positive() {
+
+        Abbonamento abbonamento = abbonamento1;
+        AbbonamentoDto dto = abbonamentoDto;
+
+        List<Abbonamento> abbonamenti = List.of(abbonamento);
+        List<AbbonamentoDto> dtoList = List.of(dto);
+
+        when(abbonamentoRepository.findAll())
+                .thenReturn(abbonamenti);
+
+        when(abbonamentoMapper.toDTOList(abbonamenti))
+                .thenReturn(dtoList);
+
+        Iterable<AbbonamentoDto> result =
+                abbonamentoService.getAll();
+
+        assertNotNull(result);
+
+        List<AbbonamentoDto> resultList = (List<AbbonamentoDto>) result;
+
+        assertEquals(dtoList, resultList);
+        assertEquals(1, resultList.size());
+
+        verify(abbonamentoRepository)
+                .findAll();
+
+        verify(abbonamentoMapper)
+                .toDTOList(abbonamenti);
+    }
+
+    @Test
+    void getAll_negative() {
+
+        List<Abbonamento> abbonamenti = new ArrayList<>();
+        List<AbbonamentoDto> expected = new ArrayList<>();
+
+        when(abbonamentoRepository.findAll())
+                .thenReturn(abbonamenti);
+
+        when(abbonamentoMapper.toDTOList(abbonamenti))
+                .thenReturn(expected);
+
+        List<AbbonamentoDto> result = (List<AbbonamentoDto>) abbonamentoService.getAll();
+
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+
+        verify(abbonamentoRepository).findAll();
+        verify(abbonamentoMapper).toDTOList(abbonamenti);
     }
 
     @Test
