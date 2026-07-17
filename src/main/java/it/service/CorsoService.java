@@ -40,15 +40,8 @@ public class CorsoService extends AbstractService<Corso, CorsoDto> {
         return corsoMapper.toDTOList(oraInizio);
     }
 
-    // Il motore di ricerca dinamico
-    public List<CorsoDto> cercaConFiltri(
-            String nome, String livello, String sport,
-            Integer campoId, GiorniEnum giorno,
-            LocalTime oraInizio, BigDecimal prezzoMax) {
-
-        List<Corso> byFiltriDinamici = corsoRepository.findByFiltriDinamici(
-                nome, livello, sport, campoId, giorno, oraInizio, prezzoMax
-        );
-        return corsoMapper.toDTOList(byFiltriDinamici);
+    public List<CorsoDto> ottieniCorsiPerCampo(Integer campoId) {
+        List<Corso> corsi = corsoRepository.findByCampoId(campoId);
+        return corsoMapper.toDTOList(corsi);
     }
 }

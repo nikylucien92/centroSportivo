@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-
 @Table(schema = "sportivo")
 public class Campo {
     @Id

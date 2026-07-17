@@ -39,19 +39,10 @@ public class CorsoController extends AbstractController<CorsoDto> {
         return ResponseEntity.ok(corsoService.trovaDaOra(ora));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<CorsoDto>> searchCorsi(
-            @RequestParam(required = false) String nome,
-            @RequestParam(required = false) String livello,
-            @RequestParam(required = false) String sport,
-            @RequestParam(required = false) Integer campoId,
-            @RequestParam(required = false) GiorniEnum giorno,
-            @RequestParam(required = false) LocalTime oraInizio,
-            @RequestParam(required = false) BigDecimal prezzoMax) {
-
-        List<CorsoDto> risultati = corsoService.cercaConFiltri(
-                nome, livello, sport, campoId, giorno, oraInizio, prezzoMax
-        );
-        return ResponseEntity.ok(risultati);
+    @GetMapping("/campo/{campoId}/corsi")
+    public ResponseEntity<List<CorsoDto>> getCorsiByCampo(@PathVariable Integer campoId) {
+        List<CorsoDto> corsi = corsoService.ottieniCorsiPerCampo(campoId);
+        return ResponseEntity.ok(corsi);
     }
+
 }
