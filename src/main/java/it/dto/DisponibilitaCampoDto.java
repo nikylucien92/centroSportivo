@@ -14,6 +14,6 @@ public class DisponibilitaCampoDto {
     private LocalDateTime data;
     private LocalDateTime oraInizio;
     private LocalDateTime oraFine;
-    private PrenotazioneDto prenotazioneCampoDto;
-    private CampoDto campoDto;
+    private PrenotazioneDto prenotazioneCampo;
+    private CampoDto campo;
 }

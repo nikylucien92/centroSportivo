@@ -20,5 +20,5 @@ public class CorsoDto {
     private LocalDateTime oraInizio;
     private LocalDateTime oraFine;
     private Double prezzo;
-    private CampoDto campoDto;
+    private CampoDto campo;
 }

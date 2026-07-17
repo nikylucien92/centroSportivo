@@ -38,7 +38,7 @@ public class UtenteService extends AbstractService<Utente, UtenteDto> {
         List<PrenotazioneDto> prenotazionedto = prenotazioneMapper.toDTOList(prenotazione);
 
         UtenteDto utentedto = utenteMapper.toDTO(utente);
-        utentedto.setListaPrenotazioniDto(prenotazionedto);
+        utentedto.setListaPrenotazioni(prenotazionedto);
         return utentedto;
     }
 

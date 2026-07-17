@@ -39,7 +39,7 @@ public class PrenotazioneController extends AbstractController<PrenotazioneDto> 
 
         @GetMapping("/listaSingoloUtente/{id}")
         public ResponseEntity listaPrenotazioniSingoloUtente(@PathVariable Integer id) throws Exception {
-            return ResponseEntity.ok(prenotazioneService.getListaPrenotazioni(id));
+            return ResponseEntity.ok(prenotazioneService.getListaPrenotazioniConPaginazione(id));
         }
 
     @GetMapping("/data")

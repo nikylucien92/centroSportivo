@@ -18,5 +18,5 @@ public class UtenteDto {
     private String password;
     private String telefono;
     private LocalDateTime dataRegistrazione;
-    private List<PrenotazioneDto> listaPrenotazioniDto;
+    private List<PrenotazioneDto> listaPrenotazioni;
 }
