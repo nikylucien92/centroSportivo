@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/utente")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UtenteController extends AbstractController<UtenteDto> {
 

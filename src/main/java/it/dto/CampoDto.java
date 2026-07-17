@@ -1,5 +1,6 @@
 package it.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class CampoDto {
     private String tipologia;
     private Double prezzo;
     private Boolean coperto;
+    @JsonIgnore
     private List<DisponibilitaCampoDto> listaDisponibilita;
+    @JsonIgnore
     private List<CorsoDto> listaCorsi;
 }

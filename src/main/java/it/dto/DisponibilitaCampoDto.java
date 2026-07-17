@@ -1,4 +1,5 @@
 package it.dto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,8 @@ public class DisponibilitaCampoDto {
     private LocalDateTime data;
     private LocalDateTime oraInizio;
     private LocalDateTime oraFine;
+    @JsonIgnore
     private PrenotazioneDto prenotazioneCampo;
+    @JsonIgnore
     private CampoDto campo;
 }

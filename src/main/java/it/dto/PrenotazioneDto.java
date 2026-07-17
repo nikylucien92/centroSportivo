@@ -1,5 +1,6 @@
 package it.dto;
 import it.model.Prenotazione;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class PrenotazioneDto {
     private Double quotaPersona;
     private String statoPrenotazione;
     private DisponibilitaCampoDto disponibilitaCampo;
+    @JsonIgnore
     private UtenteDto utenteCreato;
 
 }
