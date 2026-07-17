@@ -459,7 +459,6 @@ public class DataInitializer implements CommandLineRunner {
                 LocalDateTime.now()
         );
 
-
         return p;
     }
 

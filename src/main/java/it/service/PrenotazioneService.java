@@ -48,6 +48,18 @@ public class PrenotazioneService extends AbstractService<Prenotazione, Prenotazi
         Prenotazione prenotazione = prenotazioneMapper.toEntity(prenotazioneDto);
         prenotazione.setUtenteCreato(utente);
 
+        // Imposta la data se non è presente
+        if (prenotazione.getDataPrenotazione() == null) {
+            prenotazione.setDataPrenotazione(LocalDateTime.now());
+        }
+
+        // Recupera la DisponibilitaCampo se l'ID è presente
+        if (prenotazioneDto.getDisponibilitaCampo() != null && prenotazioneDto.getDisponibilitaCampo().getId() != null) {
+            DisponibilitaCampo disponibilita = disponibilitaCampoRepository.findById(prenotazioneDto.getDisponibilitaCampo().getId())
+                    .orElseThrow(() -> new Exception("Disponibilità non trovata"));
+            prenotazione.setDisponibilitaCampo(disponibilita);
+        }
+
         Prenotazione saved = prenotazioneRepository.save(prenotazione);
 
         LocalDate data = saved.getDataPrenotazione().toLocalDate();
@@ -225,7 +237,7 @@ public class PrenotazioneService extends AbstractService<Prenotazione, Prenotazi
                 disponibilita.setDisponibilita(true);
 
                 // Rompo la relazione bidirezionale
-                disponibilita.setPrenotazioneCampo(null);
+               // disponibilita.setPrenotazioneCampo(null);
                 prenotazione.setDisponibilitaCampo(null);
 
                 disponibilitaCampoRepository.save(disponibilita);

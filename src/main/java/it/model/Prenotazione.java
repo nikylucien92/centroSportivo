@@ -24,7 +24,7 @@ public class Prenotazione {
     private String statoPrenotazione;
 
     @JoinColumn(name="disponibilita_id")
-    @OneToOne
+    @ManyToOne
     private DisponibilitaCampo disponibilitaCampo;
 
     @JoinColumn(name="utente_id_creato")

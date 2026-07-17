@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,8 +25,8 @@ public class DisponibilitaCampo {
     private LocalDateTime oraFine;
     private Boolean disponibilita;
 
-    @OneToOne(mappedBy = "disponibilitaCampo")
-    private Prenotazione prenotazioneCampo;
+    @OneToMany(mappedBy = "disponibilitaCampo")
+    private List<Prenotazione> prenotazioniCampo;
 
     @ManyToOne
     @JoinColumn(name="campo_id")
