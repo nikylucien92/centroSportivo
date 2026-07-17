@@ -9,7 +9,13 @@ import it.model.Utente;
 import it.repository.DisponibilitaCampoRepository;
 import it.repository.PrenotazioneRepository;
 import it.repository.UtenteRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -258,7 +264,7 @@ public class PrenotazioneService extends AbstractService<Prenotazione, Prenotazi
 
         public List<PrenotazioneDto>getListaPrenotazioni(Integer idUtente) throws Exception{
 
-            Utente utente = utenteRepository.findById(idUtente)
+             utenteRepository.findById(idUtente)
                     .orElseThrow(() -> new Exception("Utente non trovato"));
 
             List<Prenotazione> prenotazioni = prenotazioneRepository.findByUtenteCreatoId(idUtente);
@@ -271,4 +277,20 @@ public class PrenotazioneService extends AbstractService<Prenotazione, Prenotazi
 
 
 
+    public Page<PrenotazioneDto> getListaPrenotazioniConPaginazione(Integer idUtente) throws Exception {
+            Pageable pageable = PageRequest.of(
+                    0,
+                    5,
+                    Sort.by("dataPrenotazione").descending()
+            );
+
+            List<Prenotazione> prenotazioniListe =prenotazioneRepository.findByUtenteCreatoId(idUtente);
+            Page<Prenotazione> prenotazioni =
+                    prenotazioneRepository.findPrenotazioniByUtente(idUtente, pageable);
+            /* Utente utente = utenteRepository.findById(idUtente)
+                    .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+            utente.setListaPrenotazioni(prenotazioniListe);
+            Utente saved = utenteRepository.save(utente); */
+            return prenotazioneMapper.toDTOPage(prenotazioni);
+        }
 }

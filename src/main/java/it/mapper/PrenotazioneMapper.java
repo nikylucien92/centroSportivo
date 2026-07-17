@@ -5,6 +5,7 @@ import it.dto.UtenteDto;
 import it.model.Prenotazione;
 import it.model.Utente;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,5 +19,9 @@ public class PrenotazioneMapper extends AbstractConverter<Prenotazione, Prenotaz
     @Override
     public  PrenotazioneDto toDTO(Prenotazione entity) {
         return mapper.map(entity, PrenotazioneDto.class);
+    }
+
+    public Page<PrenotazioneDto> toDTOPage(Page<Prenotazione> prenotazioni) {
+        return prenotazioni.map(this::toDTO);
     }
 }

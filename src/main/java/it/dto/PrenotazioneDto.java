@@ -16,7 +16,7 @@ public class PrenotazioneDto {
     private Double costoTotale;
     private Double quotaPersona;
     private String statoPrenotazione;
-    private DisponibilitaCampoDto disponibilitaCampoDto;
-    private UtenteDto utenteCreatoDto;
+    private DisponibilitaCampoDto disponibilitaCampo;
+    private UtenteDto utenteCreato;
 
 }
