@@ -1,12 +1,13 @@
 package it.dto;
 
 import it.enumerated.AbbonamentoTypeEnum;
-import it.model.Utente;
+import it.enumerated.StatoAbbonamentoEnum;
 import lombok.*;
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
-@Setter
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,10 +17,14 @@ public class AbbonamentoDto {
     private Integer id;
 
     private AbbonamentoTypeEnum tipo;
-    private LocalDateTime dataInizio;
-    private LocalDateTime dataFine;
-    private Double prezzo;
-    private String stato;
+
+    private LocalDate dataInizio;
+
+    private LocalDate dataFine;
+
+    private BigDecimal prezzo;
+
+    private StatoAbbonamentoEnum stato;
 
     private UtenteDto utente;
 }
