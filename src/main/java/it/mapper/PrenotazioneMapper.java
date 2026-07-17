@@ -16,7 +16,7 @@ public class PrenotazioneMapper extends AbstractConverter<Prenotazione, Prenotaz
     }
 
     @Override
-    public PrenotazioneDto toDTO(Prenotazione entity) {
+    public  PrenotazioneDto toDTO(Prenotazione entity) {
         return mapper.map(entity, PrenotazioneDto.class);
     }
 }

@@ -31,18 +31,16 @@ public class PrenotazioneController extends AbstractController<PrenotazioneDto> 
         return ResponseEntity.ok(prenotazioneCancellata);
     }
 
-    // Todo: aggiungere endpoint per recuperare le prenotazioni di un utente
-    // Todo: aggiungere endpoint per cambiare lo stato della prenotazione (es. da "in attesa" a "confermata" oppure "annullata")
-    // Todo: cambiare nome all'entity Corso
-    // Todo: aggiungere metodo per trovare le prenotazione in base alla data
-    // Todo:
 
     @GetMapping("/{utenteId}/spesa-totale")
     public ResponseEntity<Double> spesaTotale(@PathVariable(name = "utenteId") Integer id) {
         return ResponseEntity.ok(prenotazioneService.calcolaSpesaTotale(id));
     }
 
-
+        @GetMapping("/listaSingoloUtente/{id}")
+        public ResponseEntity listaPrenotazioniSingoloUtente(@PathVariable Integer id) throws Exception {
+            return ResponseEntity.ok(prenotazioneService.getListaPrenotazioni(id));
+        }
 
     @GetMapping("/data")
     public ResponseEntity<List<PrenotazioneDto>> trovaPerData(

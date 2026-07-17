@@ -2,7 +2,6 @@ package it.repository;
 
 import it.enumerated.GiorniEnum;
 import it.model.Corso;
-import it.model.Utente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

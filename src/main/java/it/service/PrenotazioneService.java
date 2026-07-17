@@ -1,17 +1,12 @@
 package it.service;
 
-import it.dto.PagamentoDto;
 import it.dto.PrenotazioneDto;
-import it.dto.UtenteDto;
 import it.mapper.Converter;
-import it.mapper.PagamentoMapper;
 import it.mapper.PrenotazioneMapper;
 import it.model.DisponibilitaCampo;
-import it.model.Pagamento;
 import it.model.Prenotazione;
 import it.model.Utente;
 import it.repository.DisponibilitaCampoRepository;
-import it.repository.PagamentoRepository;
 import it.repository.PrenotazioneRepository;
 import it.repository.UtenteRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -260,4 +255,20 @@ public class PrenotazioneService extends AbstractService<Prenotazione, Prenotazi
 
         return prenotazioneMapper.toDTOList(prenotazioni);
     }
+
+        public List<PrenotazioneDto>getListaPrenotazioni(Integer idUtente) throws Exception{
+
+            Utente utente = utenteRepository.findById(idUtente)
+                    .orElseThrow(() -> new Exception("Utente non trovato"));
+
+            List<Prenotazione> prenotazioni = prenotazioneRepository.findByUtenteCreatoId(idUtente);
+
+
+            return prenotazioni.stream()
+                    .map(prenotazioneMapper::toDTO)
+                    .toList();
+        }
+
+
+
 }
