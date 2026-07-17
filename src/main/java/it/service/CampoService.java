@@ -68,18 +68,6 @@ public class CampoService extends AbstractService<Campo, CampoDto> {
 
     }
 
-
-
-    public List<CampoDto> cercaPerPrezzoMassimo(Double prezzo){
-
-        return campoMapper.toDTOList(
-                campoRepository.findByPrezzoLessThanEqual(prezzo)
-        );
-
-    }
-
-
-
     public List<CampoDto> findByTipologiaAndCoperto(
             String tipologia,
             Boolean coperto){

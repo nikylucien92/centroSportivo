@@ -20,11 +20,6 @@ public interface CampoRepository extends JpaRepository<Campo, Integer> {
     // Filtra campi coperti o scoperti
     List<Campo> findByCoperto(Boolean coperto);
 
-
-    // Campi con prezzo massimo orario
-    List<Campo> findByPrezzoLessThanEqual(Double prezzo);
-
-
     // Verifica se esiste un campo con quel nome
     boolean existsByNome(String nome);
 

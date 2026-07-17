@@ -61,7 +61,6 @@ public class CampoController extends AbstractController<CampoDto> {
     }
 
 
-
     @GetMapping("/coperto/{coperto}")
     @Operation(
             summary = "Trova campi coperti o scoperti",
@@ -81,22 +80,6 @@ public class CampoController extends AbstractController<CampoDto> {
 
 
 
-    @GetMapping("/prezzo/{prezzo}")
-    @Operation(
-            summary = "Trova campi per prezzo massimo",
-            description = "Restituisce i campi con prezzo inferiore o uguale al valore indicato"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Lista campi recuperata correttamente"),
-            @ApiResponse(responseCode = "400", description = "Prezzo non valido"),
-            @ApiResponse(responseCode = "500", description = "Errore interno del server")
-    })
-    public List<CampoDto> cercaPerPrezzoMassimo(
-            @PathVariable Double prezzo) {
-
-        return campoService.cercaPerPrezzoMassimo(prezzo);
-
-    }
 
 
 

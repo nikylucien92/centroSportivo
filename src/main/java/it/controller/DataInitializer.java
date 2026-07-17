@@ -102,28 +102,28 @@ public class DataInitializer implements CommandLineRunner {
 
 
         Campo padel = creaCampo(
-                "Campo Padel 1",
+                "Campo 1",
                 "Padel",
                 25.00
         );
 
 
         Campo tennis = creaCampo(
-                "Campo Tennis 1",
+                "Campo 2",
                 "Tennis",
                 20.00
         );
 
 
         Campo calcetto = creaCampo(
-                "Campo Calcetto",
+                "Campo 3",
                 "Calcio a 5",
                 50.00
         );
 
 
         Campo basket = creaCampo(
-                "Campo Basket",
+                "Campo 4",
                 "Basket",
                 35.00
         );
@@ -277,7 +277,7 @@ public class DataInitializer implements CommandLineRunner {
 
         corsoRepository.save(
                 creaCorso(
-                        "Corso Padel Base",
+                        "Corso Base",
                         "Padel",
                         padel
                 )
@@ -286,7 +286,7 @@ public class DataInitializer implements CommandLineRunner {
 
         corsoRepository.save(
                 creaCorso(
-                        "Corso Tennis Avanzato",
+                        "Corso Avanzato",
                         "Tennis",
                         tennis
                 )
