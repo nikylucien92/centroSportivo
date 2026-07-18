@@ -4,6 +4,7 @@ import it.dto.UtenteDto;
 import it.service.UtenteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,5 +40,14 @@ public class UtenteController extends AbstractController<UtenteDto> {
 
         return ResponseEntity.ok(utenteDto);
     }
+
+    @PutMapping("/{id}/promuovi")
+    @PreAuthorize("hasRole('ADMIN', 'ROOT')")
+    public ResponseEntity<UtenteDto> promuoviAdAdmin(@PathVariable Integer id) throws Exception {
+        UtenteDto utenteAggiornato = utenteService.upgradeToAdmin(id);
+        return ResponseEntity.ok(utenteAggiornato);
+    }
+
+
 
 }

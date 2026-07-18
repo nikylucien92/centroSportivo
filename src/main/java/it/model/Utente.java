@@ -1,5 +1,6 @@
 package it.model;
 
+import it.enumerated.RuoloEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +28,11 @@ public class Utente {
     private String password;
     private String telefono;
     private LocalDateTime dataRegistrazione;
+    @Enumerated(EnumType.STRING)
+    private RuoloEnum ruolo=RuoloEnum.USER;
 
     @OneToMany (mappedBy = "utenteCreato", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Prenotazione> listaPrenotazioni=new ArrayList<>();
 }
+//admin solo delete  user per sicurezzer
+//

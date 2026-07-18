@@ -2,6 +2,7 @@ package it.service;
 
 import it.dto.PrenotazioneDto;
 import it.dto.UtenteDto;
+import it.enumerated.RuoloEnum;
 import it.mapper.Converter;
 import it.mapper.PrenotazioneMapper;
 import it.mapper.UtenteMapper;
@@ -30,6 +31,13 @@ public class UtenteService extends AbstractService<Utente, UtenteDto> {
         this.prenotazioneRepository = prenotazioneRepository;
     }
 
+    public UtenteDto upgradeToAdmin(Integer id) throws Exception {
+       Utente utente= utenteRepository.findById(id)
+               .orElseThrow(()->new Exception("User not found"));
+       utente.setRuolo(RuoloEnum.ADMIN);
+        Utente saved = utenteRepository.save(utente);
+        return utenteMapper.toDTO(saved);
+    }
 
     public UtenteDto findByEmail(String email) throws Exception {
         Utente utente = utenteRepository.findByEmail(email)
