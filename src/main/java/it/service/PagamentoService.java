@@ -47,6 +47,7 @@ public class PagamentoService extends AbstractService<Pagamento, PagamentoDto> {
         return pagamentoMapper.toDTOList(pagamenti);
     }
 
+
     public List<PagamentoDto> getPagamenti(
             Integer userId,
             PagamentoStatoEnum stato,
