@@ -1,13 +1,11 @@
 package progetto.centroSportivo.centroSportivo.ServiceTest;
 
 import it.dto.AbbonamentoDto;
-import it.dto.CampoDto;
 import it.dto.UtenteDto;
 import it.enumerated.AbbonamentoTypeEnum;
 import it.enumerated.StatoAbbonamentoEnum;
 import it.mapper.AbbonamentoMapper;
 import it.model.Abbonamento;
-import it.model.Campo;
 import it.model.Utente;
 import it.repository.AbbonamentoRepository;
 import it.service.AbbonamentoService;
@@ -289,24 +287,23 @@ public class AbbonamentoServiceTest {
     }
 
     @Test
-    void getAll_negative() {
-
-        List<Abbonamento> abbonamenti = new ArrayList<>();
-        List<AbbonamentoDto> expected = new ArrayList<>();
+    void getAll_negative(){
 
         when(abbonamentoRepository.findAll())
-                .thenReturn(abbonamenti);
+                .thenThrow(
+                        new RuntimeException("Errore recupero abbonamenti")
+                );
 
-        when(abbonamentoMapper.toDTOList(abbonamenti))
-                .thenReturn(expected);
 
-        List<AbbonamentoDto> result = (List<AbbonamentoDto>) abbonamentoService.getAll();
+        assertThrows(
+                RuntimeException.class,
+                () -> abbonamentoService.getAll()
+        );
 
-        assertNotNull(result);
-        assertTrue(result.isEmpty());
 
-        verify(abbonamentoRepository).findAll();
-        verify(abbonamentoMapper).toDTOList(abbonamenti);
+        verify(abbonamentoRepository)
+                .findAll();
+
     }
 
     @Test
@@ -407,6 +404,9 @@ public class AbbonamentoServiceTest {
         verify(abbonamentoRepository)
                 .findByStato(StatoAbbonamentoEnum.ATTIVO);
 
+        verify(abbonamentoMapper)
+                .toDTOList(abbonamenti);
+
     }
 
 
@@ -463,21 +463,21 @@ public class AbbonamentoServiceTest {
 
 
     @Test
-    void findByUtenteId_negative() {
-
+    void findByUtenteId_notFound(){
 
         when(abbonamentoRepository.findByUtenteId(99))
                 .thenReturn(null);
 
 
-        when(abbonamentoMapper.toDTO(null))
-                .thenThrow(new RuntimeException());
+        AbbonamentoDto result =
+                abbonamentoService.findByUtenteId(99);
 
 
-        assertThrows(
-                RuntimeException.class,
-                () -> abbonamentoService.findByUtenteId(99)
-        );
+        assertNull(result);
+
+
+        verify(abbonamentoRepository)
+                .findByUtenteId(99);
 
     }
 
@@ -529,51 +529,35 @@ public class AbbonamentoServiceTest {
     }
 
     @Test
-    void findInScadenza_negative() {
-
+    void findInScadenza_negative(){
 
         LocalDate inizio =
-                LocalDate.of(2026, 7, 1);
+                LocalDate.of(2026,7,1);
 
         LocalDate fine =
-                LocalDate.of(2026, 8, 31);
-
+                LocalDate.of(2026,8,31);
 
 
         when(abbonamentoRepository.findByDataFineBetween(
                 inizio,
                 fine
         ))
-                .thenReturn(new ArrayList<>());
-
-
-
-        when(abbonamentoMapper.toDTOList(new ArrayList<>()))
-                .thenReturn(new ArrayList<>());
-
-
-
-        List<AbbonamentoDto> result =
-                abbonamentoService.findInScadenza(
-                        inizio,
-                        fine
+                .thenThrow(
+                        new RuntimeException("Errore ricerca scadenze")
                 );
 
 
-
-        assertNotNull(result);
-
-        assertTrue(result.isEmpty());
-
+        assertThrows(
+                RuntimeException.class,
+                () -> abbonamentoService.findInScadenza(
+                        inizio,
+                        fine
+                )
+        );
 
 
         verify(abbonamentoRepository)
-                .findByDataFineBetween(inizio, fine);
-
-
-
-        verify(abbonamentoMapper)
-                .toDTOList(new ArrayList<>());
+                .findByDataFineBetween(inizio,fine);
 
     }
 
@@ -622,11 +606,9 @@ public class AbbonamentoServiceTest {
     }
 
     @Test
-    void findValidiOggi_negative() {
-
+    void findValidiOggi_negative(){
 
         LocalDate oggi = LocalDate.now();
-
 
 
         when(
@@ -636,24 +618,15 @@ public class AbbonamentoServiceTest {
                                 oggi
                         )
         )
-                .thenReturn(new ArrayList<>());
+                .thenThrow(
+                        new RuntimeException("Errore ricerca validi")
+                );
 
 
-
-        when(abbonamentoMapper.toDTOList(new ArrayList<>()))
-                .thenReturn(new ArrayList<>());
-
-
-
-        List<AbbonamentoDto> result =
-                abbonamentoService.findValidiOggi();
-
-
-
-        assertNotNull(result);
-
-        assertTrue(result.isEmpty());
-
+        assertThrows(
+                RuntimeException.class,
+                () -> abbonamentoService.findValidiOggi()
+        );
 
 
         verify(abbonamentoRepository)
@@ -661,11 +634,6 @@ public class AbbonamentoServiceTest {
                         oggi,
                         oggi
                 );
-
-
-
-        verify(abbonamentoMapper)
-                .toDTOList(new ArrayList<>());
 
     }
 
@@ -708,6 +676,12 @@ public class AbbonamentoServiceTest {
 
         verify(abbonamentoRepository)
                 .save(abbonamento1);
+
+        verify(abbonamentoMapper)
+                .toEntity(abbonamentoDto);
+
+        verify(abbonamentoMapper)
+                .toDTO(abbonamento1);
 
     }
 
@@ -763,6 +737,9 @@ public class AbbonamentoServiceTest {
         verify(abbonamentoRepository)
                 .save(abbonamento1);
 
+        verify(abbonamentoMapper)
+                .toDTO(abbonamento1);
+
     }
 
 
@@ -813,6 +790,8 @@ public class AbbonamentoServiceTest {
         verify(abbonamentoRepository)
                 .saveAll(lista);
 
+        verify(abbonamentoRepository)
+                .findByDataFineBefore(any(LocalDate.class));
 
     }
 
