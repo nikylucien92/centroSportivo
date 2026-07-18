@@ -75,7 +75,8 @@ public class UtenteController extends AbstractController<UtenteDto> {
     }
 
     @PutMapping("/{id}/promuovi")
-    @PreAuthorize("hasRole('ADMIN', 'ROOT')")
+    // @PreAuthorize("hasRole('ADMIN','ROOT')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ROOT')")
     public ResponseEntity<UtenteDto> promuoviAdAdmin(@PathVariable Integer id) throws Exception {
         UtenteDto utenteAggiornato = utenteService.upgradeToAdmin(id);
         return ResponseEntity.ok(utenteAggiornato);
