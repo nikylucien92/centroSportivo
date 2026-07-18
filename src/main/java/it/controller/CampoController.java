@@ -114,8 +114,11 @@ public class CampoController extends AbstractController<CampoDto> {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Controllo completato"),
+            @ApiResponse(responseCode = "400", description = "Nome non valido"),
             @ApiResponse(responseCode = "500", description = "Errore interno del server")
     })
+
+
     public boolean existsByNome(
             @PathVariable String nome) {
 
