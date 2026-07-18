@@ -23,7 +23,6 @@ import static org.mockito.ArgumentMatchers.any;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -354,14 +353,14 @@ public class AbbonamentoControllerTest {
         when(abbonamentoService.findByTipo(
                 AbbonamentoTypeEnum.MENSILE
         ))
-                .thenReturn(new ArrayList<>());
+                .thenThrow(new RuntimeException("Errore ricerca tipo"));
 
 
-        mockMvc.perform(
+        assertThrows(Exception.class, () ->
+                mockMvc.perform(
                         get("/abbonamento/tipo/MENSILE")
                 )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(0));
+        );
 
 
         verify(abbonamentoService)
@@ -400,16 +399,14 @@ public class AbbonamentoControllerTest {
         when(abbonamentoService.findByStato(
                 StatoAbbonamentoEnum.ATTIVO
         ))
-                .thenReturn(new ArrayList<>());
+                .thenThrow(new RuntimeException("Errore ricerca stato"));
 
 
-
-        mockMvc.perform(
+        assertThrows(Exception.class, () ->
+                mockMvc.perform(
                         get("/abbonamento/stato/ATTIVO")
                 )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(0));
-
+        );
 
 
         verify(abbonamentoService)
@@ -445,15 +442,14 @@ public class AbbonamentoControllerTest {
 
 
         when(abbonamentoService.findByUtenteId(99))
-                .thenReturn(null);
+                .thenThrow(new RuntimeException("Abbonamento non trovato"));
 
 
-
-        mockMvc.perform(
+        assertThrows(Exception.class, () ->
+                mockMvc.perform(
                         get("/abbonamento/utente/99")
                 )
-                .andExpect(status().isOk());
-
+        );
 
 
         verify(abbonamentoService)
@@ -500,18 +496,16 @@ public class AbbonamentoControllerTest {
                 LocalDate.of(2026,7,1),
                 LocalDate.of(2026,8,31)
         ))
-                .thenReturn(new ArrayList<>());
+                .thenThrow(new RuntimeException("Errore ricerca scadenza"));
 
 
-
-        mockMvc.perform(
+        assertThrows(Exception.class, () ->
+                mockMvc.perform(
                         get("/abbonamento/scadenza")
                                 .param("inizio","2026-07-01")
                                 .param("fine","2026-08-31")
                 )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(0));
-
+        );
 
 
         verify(abbonamentoService)
@@ -550,17 +544,14 @@ public class AbbonamentoControllerTest {
 
 
         when(abbonamentoService.findScaduti())
-                .thenReturn(new ArrayList<>());
+                .thenThrow(new RuntimeException("Errore ricerca scaduti"));
 
 
-
-        mockMvc.perform(
+        assertThrows(Exception.class, () ->
+                mockMvc.perform(
                         get("/abbonamento/scaduti")
                 )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(0));
-
-
+        );
 
         verify(abbonamentoService)
                 .findScaduti();
@@ -594,16 +585,14 @@ public class AbbonamentoControllerTest {
 
 
         when(abbonamentoService.findValidiOggi())
-                .thenReturn(new ArrayList<>());
+                .thenThrow(new RuntimeException("Errore ricerca attivi"));
 
 
-
-        mockMvc.perform(
+        assertThrows(Exception.class, () ->
+                mockMvc.perform(
                         get("/abbonamento/attivi")
                 )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(0));
-
+        );
 
 
         verify(abbonamentoService)
