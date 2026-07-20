@@ -10,10 +10,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentConversionNotSupportedException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalTime;
 import java.util.Collections;
@@ -37,17 +44,41 @@ class CorsoControllerTest {
 
     private CorsoDto sampleDto;
 
-    @BeforeEach
-    void setUp() {
-        // Creiamo un conversion service per gestire correttamente i parametri di tipo LocalTime ed Enum
-        FormattingConversionService conversionService = new FormattingConversionService();
-        //  parsare le stringhe in LocalTime ed Enum nei test
-        conversionService.addConverter(String.class, LocalTime.class, LocalTime::parse);
-        // Inizializza MockMvc
-        mockMvc = MockMvcBuilders.standaloneSetup(corsoController)
-                .setConversionService(conversionService)
-                .build();
-        sampleDto = new CorsoDto();
+@BeforeEach
+void setUp() {
+    FormattingConversionService conversionService = new FormattingConversionService();
+    // Converter per LocalTime
+    conversionService.addConverter(String.class, LocalTime.class, LocalTime::parse);
+
+    // Registrar la conversione standard da String ad Enum per Spring
+    conversionService.addConverter(String.class, GiorniEnum.class, source -> {
+        try {
+            return GiorniEnum.valueOf(source.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Enum non valido: " + source);
+        }
+    });
+
+    mockMvc = MockMvcBuilders.standaloneSetup(corsoController)
+            .setConversionService(conversionService)
+            .setControllerAdvice(new TestExceptionHandler()) // <--- Handler per gli errori di conversione
+            .build();
+
+    sampleDto = new CorsoDto();
+}
+
+    // Handler interno per intercettare le eccezioni di conversione e restituire 400
+    @ControllerAdvice
+    static class TestExceptionHandler {
+        @ExceptionHandler({
+                MethodArgumentTypeMismatchException.class,
+                MethodArgumentConversionNotSupportedException.class,
+                IllegalArgumentException.class,
+                ConversionFailedException.class
+        })
+        public ResponseEntity<Void> handleConversionExceptions() {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     //corsi ne lgiorno
