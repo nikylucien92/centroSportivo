@@ -1,4 +1,4 @@
-package progetto.centroSportivo.centroSportivo.ServiceTest;
+package test.ServiceTest;
 
 import it.dto.PrenotazioneDto;
 import it.dto.UtenteDto;
@@ -19,7 +19,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.expression.ExpressionException;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

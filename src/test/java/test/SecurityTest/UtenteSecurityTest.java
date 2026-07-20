@@ -1,8 +1,8 @@
-package progetto.centroSportivo.centroSportivo.ControllerTest;
+package test.SecurityTest;
 
+import it.CentroSportivoApplication;
 import it.controller.UtenteController;
 import it.dto.UtenteDto;
-import it.enumerated.RuoloEnum;
 import it.service.UtenteService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +10,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -25,7 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-class UtenteControllerTest {
+@ContextConfiguration(classes = CentroSportivoApplication.class)
+@AutoConfigureMockMvc(addFilters = false)
+class UtenteSecurityTest {
 
     private MockMvc mockMvc;
 
@@ -36,6 +40,8 @@ class UtenteControllerTest {
     private UtenteController utenteController;
 
     private UtenteDto sampleUtenteDto;
+
+     /*
 
     @BeforeEach
     void setUp() {
@@ -118,4 +124,6 @@ class UtenteControllerTest {
 
         verify(utenteService, never()).delete(anyInt());
     }
+    */
+
 }

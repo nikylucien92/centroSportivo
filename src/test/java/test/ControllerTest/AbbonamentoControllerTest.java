@@ -1,4 +1,4 @@
-package progetto.centroSportivo.centroSportivo.ControllerTest;
+package test.ControllerTest;
 
 
 import it.controller.AbbonamentoController;
@@ -10,6 +10,7 @@ import it.CentroSportivoApplication;
 import it.service.AbbonamentoService;
 import org.junit.jupiter.api.BeforeEach;
 
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(AbbonamentoController.class)
 @ContextConfiguration(classes = CentroSportivoApplication.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class AbbonamentoControllerTest {
 
 

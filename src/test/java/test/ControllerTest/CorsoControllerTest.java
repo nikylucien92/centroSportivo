@@ -1,4 +1,4 @@
-package progetto.centroSportivo.centroSportivo.ControllerTest;
+package test.ControllerTest;
 
 import it.controller.CorsoController;
 import it.dto.CorsoDto;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 class CorsoControllerTest {
 
     private MockMvc mockMvc;

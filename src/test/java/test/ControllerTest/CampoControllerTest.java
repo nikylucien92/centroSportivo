@@ -1,10 +1,11 @@
-package progetto.centroSportivo.centroSportivo.ControllerTest;
+package test.ControllerTest;
 
 import it.controller.CampoController;
 import it.dto.CampoDto;
 import it.CentroSportivoApplication;
 import it.service.CampoService;
 import org.junit.jupiter.api.BeforeEach;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
-
 @WebMvcTest(CampoController.class)
 @ContextConfiguration(classes = CentroSportivoApplication.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class CampoControllerTest {
 
 

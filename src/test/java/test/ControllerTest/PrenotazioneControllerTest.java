@@ -1,5 +1,6 @@
-package progetto.centroSportivo.centroSportivo.ControllerTest;
+package test.ControllerTest;
 
+import it.CentroSportivoApplication;
 import it.controller.PrenotazioneController;
 import it.dto.PrenotazioneDto;
 import it.service.PrenotazioneService;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MediaType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(PrenotazioneController.class)
 @ContextConfiguration(classes = PrenotazioneController.class)
+@AutoConfigureMockMvc(addFilters = false)
 
     public class PrenotazioneControllerTest {
         @Autowired

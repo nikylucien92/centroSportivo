@@ -1,4 +1,4 @@
-package progetto.centroSportivo.centroSportivo.ServiceTest;
+package test.ServiceTest;
 
 import it.dto.CorsoDto;
 import it.enumerated.GiorniEnum;
