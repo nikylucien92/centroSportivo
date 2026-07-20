@@ -49,7 +49,6 @@ void setUp() {
     FormattingConversionService conversionService = new FormattingConversionService();
     // Converter per LocalTime
     conversionService.addConverter(String.class, LocalTime.class, LocalTime::parse);
-
     // Registrar la conversione standard da String ad Enum per Spring
     conversionService.addConverter(String.class, GiorniEnum.class, source -> {
         try {
@@ -61,13 +60,12 @@ void setUp() {
 
     mockMvc = MockMvcBuilders.standaloneSetup(corsoController)
             .setConversionService(conversionService)
-            .setControllerAdvice(new TestExceptionHandler()) // <--- Handler per gli errori di conversione
+            .setControllerAdvice(new TestExceptionHandler())
             .build();
 
     sampleDto = new CorsoDto();
 }
 
-    // Handler interno per intercettare le eccezioni di conversione e restituire 400
     @ControllerAdvice
     static class TestExceptionHandler {
         @ExceptionHandler({
