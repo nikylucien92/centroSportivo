@@ -18,4 +18,6 @@ public class PagamentoDto {
     private PagamentoTypeEnum metodo;
     private PagamentoStatoEnum stato;
     private LocalDateTime dataPagamento;
+
+
 }
