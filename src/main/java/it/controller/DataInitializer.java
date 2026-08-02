@@ -8,6 +8,7 @@ import it.model.*;
 import it.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -31,6 +32,7 @@ public class DataInitializer implements CommandLineRunner {
     private final CorsoRepository corsoRepository;
     private final AbbonamentoRepository abbonamentoRepository;
 
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -39,7 +41,7 @@ public class DataInitializer implements CommandLineRunner {
 
         if (utenteRepository.count() > 0)
             return;
-
+             creaAdmin();
 
 
         /*
@@ -362,7 +364,25 @@ public class DataInitializer implements CommandLineRunner {
 
 
 
+    private void creaAdmin(){
 
+
+        Utente admin = new Utente();
+
+        admin.setNome("Nicola");
+        admin.setCognome("Pignatiello");
+        admin.setEmail("pignatiello.nicol@gmail.com");
+
+        admin.setPassword(
+                passwordEncoder.encode("Admin123!")
+        );
+
+        admin.setRuolo(RuoloEnum.ADMIN);
+
+
+        utenteRepository.save(admin);
+
+    }
 
 
     private Utente creaUtente(
@@ -554,10 +574,6 @@ public class DataInitializer implements CommandLineRunner {
 
         return a;
     }
-
-
-
-
 
 
     private Abbonamento creaAbbonamentoScaduto(

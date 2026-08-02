@@ -18,11 +18,22 @@ import java.util.List;
 public class DisponibilitaCampo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id_disponibilita")
     private Integer id;
+
+    @Column(name="stato_disponibilita")
     private String statoDisponibilita;
+
+    @Column(name="data_disponibilita")
     private LocalDateTime data;
+
+    @Column(name="ora_inizio")
     private LocalDateTime oraInizio;
+
+    @Column(name="ora_fine")
     private LocalDateTime oraFine;
+
+    @Column(name="disponibilita")
     private Boolean disponibilita;
 
     @OneToMany(mappedBy = "disponibilitaCampo")

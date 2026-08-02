@@ -25,4 +25,6 @@ public class CustomUserDetails implements UserDetailsService {
                 .roles(String.valueOf(utente.getRuolo()))
                 .build();
     }
+
+
 }

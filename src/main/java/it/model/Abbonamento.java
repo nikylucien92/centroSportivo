@@ -21,16 +21,24 @@ public class Abbonamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id_abbonamento")
     private Integer id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name="tipo_abbonamento")
     private AbbonamentoTypeEnum tipo;
 
+    @Column(name="data_inizio")
     private LocalDate dataInizio;
+
+    @Column(name="data_fine")
     private LocalDate dataFine;
+
+    @Column(name="prezzo")
     private BigDecimal prezzo;
 
     @Enumerated(EnumType.STRING)
+    @Column(name="stato")
     private StatoAbbonamentoEnum stato;
 
     @OneToOne
