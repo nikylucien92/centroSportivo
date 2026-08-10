@@ -15,11 +15,11 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(schema = "sportivo")
+@Table(schema = "sportivo" ,name = "corso")
 public class Corso {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_corso")
     private Integer id;
 

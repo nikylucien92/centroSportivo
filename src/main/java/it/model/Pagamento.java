@@ -16,11 +16,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(schema = "sportivo")
+@Table(schema = "sportivo" ,name = "pagamento")
 public class Pagamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY
+    )
     @Column(name="id_pagamento")
     private Integer id;
 

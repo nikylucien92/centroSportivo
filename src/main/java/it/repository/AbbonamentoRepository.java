@@ -13,7 +13,7 @@ import java.util.List;
 public interface AbbonamentoRepository extends JpaRepository<Abbonamento, Integer> {
 
 
-    // Abbonamento di un cliente
+    // Abbonamento di un utente
     Abbonamento findByUtenteId(Integer idUtente);
 
     // Ricerca per stato

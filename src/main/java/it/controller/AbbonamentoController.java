@@ -3,6 +3,7 @@ package it.controller;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.dto.AbbonamentoDto;
+import it.service.ServiceDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,13 +24,15 @@ import java.util.List;
 public class AbbonamentoController
         extends AbstractController<AbbonamentoDto> {
 
-
-
     @Autowired
     private AbbonamentoService abbonamentoService;
 
+	protected AbbonamentoController(ServiceDto<AbbonamentoDto> service) {
+		super(service);
+	}
 
-    // Cerca per tipologia
+
+	// Cerca per tipologia
     @GetMapping("/tipo/{tipo}")
     @Operation(
             summary = "Trova abbonamenti per tipo",
@@ -73,11 +76,11 @@ public class AbbonamentoController
 
 
 
-    // Cerca abbonamento di un cliente
+    // Cerca abbonamento di un utente
     @GetMapping("/utente/{idUtente}")
     @Operation(
             summary = "Trova abbonamento utente",
-            description = "Restituisce l'abbonamento associato al cliente"
+            description = "Restituisce l'abbonamento associato all'utente"
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Abbonamento trovato correttamente"),

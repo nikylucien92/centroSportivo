@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.dto.PrenotazioneDto;
 import it.service.PrenotazioneService;
+import it.service.ServiceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -15,23 +16,23 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
+
 @RequestMapping("/prenotazione")
 @CrossOrigin(origins = "http://localhost:4200")
 public class PrenotazioneController extends AbstractController<PrenotazioneDto> {
+
     private final PrenotazioneService prenotazioneService;
 
-    @PostMapping
+	protected PrenotazioneController(ServiceDto<PrenotazioneDto> service, PrenotazioneService prenotazioneService) {
+		super(service);
+		this.prenotazioneService = prenotazioneService;
+	}
+
+	@PostMapping
     @Operation(
             summary = "Effettua una prenotazione",
             description = "Crea una nuova prenotazione associandola all'utente indicato"
     )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Prenotazione creata correttamente"),
-            @ApiResponse(responseCode = "400", description = "Dati della prenotazione non validi"),
-            @ApiResponse(responseCode = "404", description = "Utente non trovato"),
-            @ApiResponse(responseCode = "500", description = "Errore interno del server")
-    })
     public ResponseEntity<PrenotazioneDto> createPrenotazione(@RequestBody PrenotazioneDto prenotazioneDto,
                                                               @RequestParam Integer utenteId) throws Exception {
         PrenotazioneDto createdPrenotazione = prenotazioneService.effetuaPrenotazione(prenotazioneDto, utenteId);

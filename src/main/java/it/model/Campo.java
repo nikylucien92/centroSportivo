@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(schema = "sportivo")
+@Table(schema = "sportivo" ,name = "campo")
 public class Campo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -33,10 +33,14 @@ public class Campo {
     @Column(name="coperto")
     private Boolean coperto;
 
+
+
     @OneToMany(mappedBy = "campo")
     private List<DisponibilitaCampo> listaDisponibilita=new ArrayList<>();
 
 
     @OneToMany(mappedBy = "campo")
     private List<Corso> listaCorsi=new ArrayList<>();
+
+
 }

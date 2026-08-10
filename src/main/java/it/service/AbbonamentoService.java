@@ -69,7 +69,7 @@ public class AbbonamentoService
 
 
 
-    // Cerca abbonamento di un cliente
+    // Cerca abbonamento di un utente
     public AbbonamentoDto findByUtenteId(
             Integer idUtente) {
 

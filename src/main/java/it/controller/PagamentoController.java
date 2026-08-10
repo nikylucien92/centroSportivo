@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import it.dto.PagamentoDto;
 import it.enumerated.PagamentoStatoEnum;
 import it.service.PagamentoService;
+import it.service.ServiceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
+
 @RequestMapping("/pagamento")
 @CrossOrigin(origins = "http://localhost:4200")
 public class PagamentoController extends AbstractController<PagamentoDto>{
 
     private final PagamentoService pagamentoService;
 
-    @GetMapping("/utente/{utenteId}")
+	protected PagamentoController(ServiceDto<PagamentoDto> service, PagamentoService pagamentoService) {
+		super(service);
+		this.pagamentoService = pagamentoService;
+	}
+
+	@GetMapping("/utente/{utenteId}")
     @Operation(
             summary = "Trova pagamenti per utente",
             description = "Restituisce tutti i pagamenti associati all'utente indicato"

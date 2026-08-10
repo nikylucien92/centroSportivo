@@ -7,6 +7,7 @@ import it.dto.CorsoDto;
 import it.enumerated.GiorniEnum;
 import it.model.Corso;
 import it.service.CorsoService;
+import it.service.ServiceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +19,19 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/corso")
 @CrossOrigin(origins = "http://localhost:4200")
 public class CorsoController extends AbstractController<CorsoDto> {
 
     private final CorsoService corsoService;
 
+	protected CorsoController(ServiceDto<CorsoDto> service, CorsoService corsoService) {
+		super(service);
+		this.corsoService = corsoService;
+	}
 
-    @GetMapping("/giorno/{giorno}")
+
+	@GetMapping("/giorno/{giorno}")
     @Operation(
             summary = "Trova corsi per giorno",
             description = "Restituisce tutti i corsi programmati nel giorno indicato"

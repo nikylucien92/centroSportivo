@@ -2,6 +2,7 @@ package it.controller;
 
 import it.dto.CampoDto;
 import it.service.CampoService;
+import it.service.ServiceDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +24,12 @@ public class CampoController extends AbstractController<CampoDto> {
     @Autowired
     private CampoService campoService;
 
+	protected CampoController(ServiceDto<CampoDto> service) {
+		super(service);
+	}
 
-    @GetMapping("/nome/{nome}")
+
+	@GetMapping("/nome/{nome}")
     @Operation(
             summary = "Trova campo per nome",
             description = "Restituisce un campo tramite il nome indicato"
