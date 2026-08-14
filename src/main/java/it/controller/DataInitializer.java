@@ -1,20 +1,20 @@
-/*
+
 package it.controller;
 
-import it.enumerated.AbbonamentoTypeEnum;
-import it.enumerated.GiorniEnum;
-import it.enumerated.PagamentoStatoEnum;
-import it.enumerated.PagamentoTypeEnum;
+//import it.enumerated.AbbonamentoTypeEnum;
+//import it.enumerated.GiorniEnum;
+//import it.enumerated.PagamentoStatoEnum;
+//import it.enumerated.PagamentoTypeEnum;
 import it.model.*;
 import it.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+//import java.math.BigDecimal;
+//import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+//import java.time.LocalTime;
 import it.enumerated.*;
 import it.model.*;
 import it.repository.*;
@@ -24,139 +24,144 @@ import it.repository.*;
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
-    private final UtenteRepository utenteRepository;
-    private final CampoRepository campoRepository;
-    private final DisponibilitaCampoRepository disponibilitaRepository;
-    private final PrenotazioneRepository prenotazioneRepository;
-    private final PagamentoRepository pagamentoRepository;
-    private final CorsoRepository corsoRepository;
-    private final AbbonamentoRepository abbonamentoRepository;
+	private final UtenteRepository utenteRepository;
+	private final CampoRepository campoRepository;
+	private final DisponibilitaCampoRepository disponibilitaRepository;
+	private final PrenotazioneRepository prenotazioneRepository;
+	private final PagamentoRepository pagamentoRepository;
+	private final CorsoRepository corsoRepository;
+	private final AbbonamentoRepository abbonamentoRepository;
 
-    private final PasswordEncoder passwordEncoder;
-
-
-    @Override
-    public void run(String... args) {
-
-        creaAdmin();
-        creaUtenti();
-        creaCampi();
-        creaDisponibilita();
-        creaPrenotazioni();
-        creaPagamenti();
-        creaCorsi();
-        creaAbbonamenti();
-
-        System.out.println("Database inizializzato correttamente");
-    }
+	private final PasswordEncoder passwordEncoder;
 
 
-    // ADMIN
+	@Override
+	public void run(String... args) {
+
+		creaAdmin();
+		creaUtenti();
+		//creaCampi();
+		//creaDisponibilita();
+		//creaPrenotazioni();
+		//creaPagamenti();
+		//creaCorsi();
+		//creaAbbonamenti();
+
+		System.out.println("Database inizializzato correttamente, creazione solo di ADMIN");
+	}
 
 
-    private void creaAdmin() {
-
-        String email = "pignatiello.nicol@gmail.it";
-
-        if (utenteRepository.findByEmail(email).isPresent()) {
-            return;
-        }
-
-        Utente admin = new Utente();
-
-        admin.setNome("Nicola");
-        admin.setCognome("Pignatone");
-        admin.setEmail(email);
-
-        admin.setPassword(
-                passwordEncoder.encode("Admin123!")
-        );
-
-        admin.setTelefono("3331234567");
-
-        admin.setDataRegistrazione(
-                LocalDateTime.now()
-        );
-
-        admin.setRuolo(RuoloEnum.ADMIN);
-
-        utenteRepository.save(admin);
-    }
+	// ADMIN
 
 
+	private void creaAdmin() {
+
+		String email = "pignatiello.nicol@gmail.it";
+
+		if (utenteRepository.findByEmail(email).isPresent()) {
+			return;
+		}
+
+		Utente admin = new Utente();
+
+		admin.setNome("Nicola");
+		admin.setCognome("Pignatone");
+		admin.setEmail(email);
+
+		admin.setPassword(
+				passwordEncoder.encode("Admin123!")
+		);
+
+		admin.setTelefono("3331234567");
+
+		admin.setDataRegistrazione(
+				LocalDateTime.now()
+		);
+
+		admin.setRuolo(RuoloEnum.ADMIN);
+
+		utenteRepository.save(admin);
+		}
+
+	private void creaUtenti() {
+
+		creaUtente(
+				"Mario",
+				"Rossi",
+				"mario.rossi@gmail.com",
+				"3332345111"
+		);
+
+		creaUtente(
+				"Luca",
+				"Bianchi",
+				"luca.bianchi@gmail.com",
+				"3332231722"
+		);
+
+		creaUtente(
+				"Francesco",
+				"Verdi",
+				"francesco.verdi@gmail.com",
+				"32789098533"
+		);
+		creaUtente(
+				"Giuseppe",
+				"Esposito",
+				"giuseppe.esposito@gmail.com",
+				"3334562144"
+		);
+
+		creaUtente(
+				"Andrea",
+				"Romano",
+				"andrea.romano@gmail.com",
+				"3335589155"
+		);
+	}
+
+
+	private Utente creaUtente(
+			String nome,
+			String cognome,
+			String email,
+			String telefono
+	) {
+
+		if (utenteRepository.findByEmail(email).isPresent()) {
+			return utenteRepository.findByEmail(email).get();
+		}
+
+		Utente utente = new Utente();
+
+		utente.setNome(nome);
+		utente.setCognome(cognome);
+		utente.setEmail(email);
+
+		utente.setPassword(
+				passwordEncoder.encode("Pass7777!")
+		);
+
+		utente.setTelefono(telefono);
+
+		utente.setRuolo(RuoloEnum.USER);
+
+		utente.setDataRegistrazione(
+				LocalDateTime.now()
+		);
+
+		return utenteRepository.save(utente);
+	}
+}
+
+
+
+/*
     // =========================================================
     // UTENTI
     // =========================================================
 
-    private void creaUtenti() {
 
-        creaUtente(
-                "Mario",
-                "Rossi",
-                "mario.rossi@gmail.com",
-                "3331111111"
-        );
-
-        creaUtente(
-                "Luca",
-                "Bianchi",
-                "luca.bianchi@gmail.com",
-                "3332222222"
-        );
-
-        creaUtente(
-                "Francesco",
-                "Verdi",
-                "francesco.verdi@gmail.com",
-                "3333333333"
-        );
-	    creaUtente(
-			    "Giuseppe",
-			    "Esposito",
-			    "giuseppe.esposito@gmail.com",
-			    "3334444444"
-	    );
-
-	    creaUtente(
-			    "Andrea",
-			    "Romano",
-			    "andrea.romano@gmail.com",
-			    "3335555555"
-	    );
-    }
-
-
-    private Utente creaUtente(
-            String nome,
-            String cognome,
-            String email,
-            String telefono
-    ) {
-
-        if (utenteRepository.findByEmail(email).isPresent()) {
-            return utenteRepository.findByEmail(email).get();
-        }
-
-        Utente utente = new Utente();
-
-        utente.setNome(nome);
-        utente.setCognome(cognome);
-        utente.setEmail(email);
-
-        utente.setPassword(
-                passwordEncoder.encode("Pass7777!")
-        );
-
-        utente.setTelefono(telefono);
-
-        utente.setRuolo(RuoloEnum.USER);
-
-        utente.setDataRegistrazione(
-                LocalDateTime.now()
-        );
-
-        return utenteRepository.save(utente);
-    }
 
 
     // =========================================================
@@ -618,6 +623,5 @@ public class DataInitializer implements CommandLineRunner {
 
         return abbonamentoRepository.save(a);
     }
-}
-
 */
+

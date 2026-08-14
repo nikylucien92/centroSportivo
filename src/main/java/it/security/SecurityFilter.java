@@ -3,6 +3,7 @@ package it.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -73,31 +74,18 @@ public class SecurityFilter {
 				 */
 				.authorizeHttpRequests(auth -> auth
 
-						/*
-						 * LOGIN E REGISTER PUBBLICI.
-						 */
-						.requestMatchers(
-								"/auth/**"
-						).permitAll()
+								.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
+								.requestMatchers("/auth/**").permitAll()
 
-						/*
-						 * ENDPOINT ADMIN.
-						 *
-						 * hasRole("ADMIN") cerca:
-						 *
-						 * ROLE_ADMIN
-						 */
-						.requestMatchers(
-								"/admin/**"
-						).hasRole("ADMIN")
+								.requestMatchers("/admin/**").hasRole("ADMIN")
 
+								.anyRequest().authenticated()
 
 						/*
 						 * TUTTI GLI ALTRI ENDPOINT
 						 * richiedono autenticazione.
 						 */
-						.anyRequest().authenticated()
 				)
 
 
@@ -156,8 +144,9 @@ public class SecurityFilter {
 
 		configuration.setAllowedOrigins(
 				List.of(
-						"http://127.0.0.1:5500",
-						"http://localhost:5500"
+						"http://localhost:4200",
+						"http://127.0.0.1:4200"
+
 				)
 		);
 
