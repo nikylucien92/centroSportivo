@@ -1,0 +1,207 @@
+package it.service;
+
+import it.dto.PrenotazioneDto;
+import it.mapper.Converter;
+import it.mapper.PrenotazioneMapper;
+import it.model.DisponibilitaCampo;
+import it.model.Prenotazione;
+import it.model.Utente;
+import it.repository.DisponibilitaCampoRepository;
+import it.repository.PrenotazioneRepository;
+import it.repository.UtenteRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+
+@Service
+public class PrenotazioneService extends AbstractService<Prenotazione, PrenotazioneDto>{
+    private final PrenotazioneMapper prenotazioneMapper;
+    private final PrenotazioneRepository prenotazioneRepository;
+    private final UtenteRepository utenteRepository;
+    private final DisponibilitaCampoRepository disponibilitaCampoRepository;
+    protected PrenotazioneService(JpaRepository<Prenotazione, Integer> repository, Converter<Prenotazione, PrenotazioneDto> converter, PrenotazioneMapper prenotazioneMapper, PrenotazioneRepository prenotazioneRepository, UtenteRepository utenteRepository,  DisponibilitaCampoRepository disponibilitaCampoRepository) {
+        super(repository, converter);
+        this.prenotazioneMapper = prenotazioneMapper;
+        this.prenotazioneRepository = prenotazioneRepository;
+        this.utenteRepository = utenteRepository;
+        this.disponibilitaCampoRepository = disponibilitaCampoRepository;
+    }
+
+    public PrenotazioneDto effetuaPrenotazione(PrenotazioneDto prenotazioneDto,
+                                               Integer utenteId) throws Exception {
+
+        Utente utente = utenteRepository.findById(utenteId)
+                .orElseThrow(() -> new Exception("Utente non trovato"));
+
+        Prenotazione prenotazione = prenotazioneMapper.toEntity(prenotazioneDto);
+        prenotazione.setUtenteCreato(utente);
+
+        // Imposta la data se non è presente
+        if (prenotazione.getDataPrenotazione() == null) {
+            prenotazione.setDataPrenotazione(LocalDateTime.now());
+        }
+
+        // Recupera la DisponibilitaCampo se l'ID è presente
+        if (prenotazioneDto.getDisponibilitaCampo() != null && prenotazioneDto.getDisponibilitaCampo().getId() != null) {
+            DisponibilitaCampo disponibilita = disponibilitaCampoRepository.findById(prenotazioneDto.getDisponibilitaCampo().getId())
+                    .orElseThrow(() -> new Exception("Disponibilità non trovata"));
+            prenotazione.setDisponibilitaCampo(disponibilita);
+        }
+
+        Prenotazione saved = prenotazioneRepository.save(prenotazione);
+
+        LocalDate data = saved.getDataPrenotazione().toLocalDate();
+        LocalTime ora = saved.getDataPrenotazione().toLocalTime();
+
+        String emailTo = saved.getUtenteCreato().getEmail();
+
+        String oggetto = "Confermata Prenotazione per "
+                + saved.getUtenteCreato().getCognome()
+                + " "
+                + saved.getUtenteCreato().getNome();
+
+
+        return prenotazioneMapper.toDTO(saved);
+    }
+
+//    public PrenotazioneDto effetuaPrenotazione(PrenotazioneDto prenotazioneDto,
+//                                               Integer utenteId) throws Exception {
+//        Utente utente=utenteRepository.findById(utenteId)
+//                .orElseThrow(()->new Exception("Utente non trovato"));
+//        Prenotazione prenotazione=prenotazioneMapper.toEntity(prenotazioneDto);
+//        prenotazione.setUtenteCreato(utente);
+//
+//        Prenotazione saved=prenotazioneRepository.save(prenotazione);
+//
+//        LocalDate data = saved.getDataPrenotazione().toLocalDate();
+//        LocalTime ora = saved.getDataPrenotazione().toLocalTime();
+//        String emilTo=saved.getUtenteCreato().getEmail();
+//        String ogetto="Confermata Prenotazione per "+saved.getUtenteCreato().getCognome() + " "+saved.getUtenteCreato().getNome();
+//        String testo="Buongiotno "+saved.getUtenteCreato().getNome()+
+//                ", La tua prenotazione per il campo "+ saved.getDisponibilitaCampo()
+//                .getCampo().getNome()+
+//                ", Nella giornata di " + data + " alle ore " + ora +
+//                ", Con il prezzo di "+saved.getCostoTotale()+
+//                ", E stat confermata con succ";
+//        emailService.sendEmail(emilTo,ogetto,testo);
+//        return prenotazioneMapper.toDTO(saved);
+//    }
+
+        /* public List<PrenotazioneDto> cancellaPrenotazione(Integer idUtente ,Integer idPrenotazione) throws Exception{
+
+        Utente utente=utenteRepository.findById(idUtente).orElseThrow(() -> new Exception("Utente non trovato"));
+        List<Prenotazione>lista= prenotazioneRepository.findByUtenteCreatoId(utente.getId());
+         boolean prenotazioneRimossa=lista.
+                    removeIf(p -> p.getId().equals(idPrenotazione));
+            if (!prenotazioneRimossa) {
+                throw new Exception("Prenotazione non trovata");
+            }
+            List<Prenotazione> listaSalvata=prenotazioneRepository.saveAll(lista);
+            utente.setListaPrenotazioni(listaSalvata);
+            Utente utenteSalvato=utenteRepository.save(utente);
+            return prenotazioneMapper.toDTOList(utenteSalvato.getListaPrenotazioni());
+
+        } */
+        public List<PrenotazioneDto> cancellaPrenotazione(Integer idUtente,
+                                                          Integer idPrenotazione) throws Exception {
+
+            // Recupero l'utente
+            Utente utente = utenteRepository.findById(idUtente)
+                    .orElseThrow(() -> new Exception("Utente non trovato"));
+
+            // Recupero la prenotazione
+            Prenotazione prenotazione = prenotazioneRepository.findById(idPrenotazione)
+                    .orElseThrow(() -> new Exception("Prenotazione non trovata"));
+
+            // Verifico che appartenga all'utente
+            if (!prenotazione.getUtenteCreato().getId().equals(idUtente)) {
+                throw new Exception("La prenotazione non appartiene a questo utente");
+            }
+
+            // Recupero la disponibilità associata
+            DisponibilitaCampo disponibilita = prenotazione.getDisponibilitaCampo();
+
+            if (disponibilita != null) {
+                // Libero lo slot
+                disponibilita.setDisponibilita(true);
+
+                // Rompo la relazione bidirezionale
+               // disponibilita.setPrenotazioneCampo(null);
+                prenotazione.setDisponibilitaCampo(null);
+
+                disponibilitaCampoRepository.save(disponibilita);
+            }
+
+            // Elimino la prenotazione
+            prenotazioneRepository.delete(prenotazione);
+
+            // Restituisco la lista aggiornata delle prenotazioni dell'utente
+            List<Prenotazione> listaAggiornata =
+                    prenotazioneRepository.findByUtenteCreatoId(idUtente);
+
+            return prenotazioneMapper.toDTOList(listaAggiornata);
+        }
+
+        public Double calcolaSpesaTotale(Integer utenteId){
+            return prenotazioneRepository.getTotaleSpesoDaUtente(utenteId);
+        }
+
+
+
+    public List<PrenotazioneDto> trovaPrenotazioniPerData(LocalDate data) {
+        // Se l'utente chiede il giorno 2026-07-16:
+
+        // Inizio: 2026-07-16T00:00:00
+        LocalDateTime inizio = data.atStartOfDay();
+
+        // Fine: 2026-07-16T23:59:59.999999999 (copre l'intero giorno fino all'ultimo millesimo)
+        LocalDateTime fine = data.atTime(23, 59, 59, 999999999);
+
+        List<Prenotazione> prenotazioni =
+                prenotazioneRepository.findByDataPrenotazioneBetween(inizio, fine);
+
+        return prenotazioneMapper.toDTOList(prenotazioni);
+    }
+
+        public List<PrenotazioneDto>getListaPrenotazioni(Integer idUtente) throws Exception{
+
+             utenteRepository.findById(idUtente)
+                    .orElseThrow(() -> new Exception("Utente non trovato"));
+
+            List<Prenotazione> prenotazioni = prenotazioneRepository.findByUtenteCreatoId(idUtente);
+
+
+            return prenotazioni.stream()
+                    .map(prenotazioneMapper::toDTO)
+                    .toList();
+        }
+
+
+
+    public Page<PrenotazioneDto> getListaPrenotazioniConPaginazione(Integer idUtente) throws Exception {
+            Pageable pageable = PageRequest.of(
+                    0,
+                    5,
+                    Sort.by("dataPrenotazione").descending()
+            );
+
+            List<Prenotazione> prenotazioniListe =prenotazioneRepository.findByUtenteCreatoId(idUtente);
+            Page<Prenotazione> prenotazioni =
+                    prenotazioneRepository.findPrenotazioniByUtente(idUtente, pageable);
+            /* Utente utente = utenteRepository.findById(idUtente)
+                    .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+            utente.setListaPrenotazioni(prenotazioniListe);
+            Utente saved = utenteRepository.save(utente); */
+            return prenotazioneMapper.toDTOPage(prenotazioni);
+        }
+}
